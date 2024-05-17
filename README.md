@@ -9,7 +9,7 @@ Install Web by running either of the following:
 Clone the repository with the following command:
 
 ```bash
-git clone https://gitlab.com/mirai-digital-solusi/tuku-website.git
+git clone https://github.com/Mirai-Digital-Solusi/renkaru.git
 ```
 
 Run in terminal this command:
