@@ -39,5 +39,13 @@ export const columnsFleetsData = [
       Header: "IMAGE URL",
       accessor: "image_url",
     },
+    {
+      Header: "UPDATE",
+      accessor: "update",
+    },
+    {
+      Header: "DELETE",
+      accessor: "delete",
+    },
   ];
   
