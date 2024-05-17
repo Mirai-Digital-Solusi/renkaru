@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2023-07-05",
+    "branch_id":"TK-15",
+    "id_bill":"POS0017-41525240",
+    "data_type": "OK"
+  },
+  {
+    "date": "2023-07-05",
+    "branch_id":"TK-15",
+    "id_bill":"POS0017-41525239",
+    "data_type": "OK"
+  },
+  {
+    "date": "2023-07-05",
+    "branch_id":"TK-15",
+    "id_bill":"POS0017-41525238",
+    "data_type": "Cancel"
+  },
+  {
+    "date": "2023-07-05",
+    "branch_id":"TK-15",
+    "id_bill":"POS0017-41525238",
+    "data_type": "Cancel"
+  },
+  {
+    "date": "2023-07-05",
+    "branch_id":"TK-15",
+    "id_bill":"POS0017-41525238",
+    "data_type": "OK"
+  },
+  {
+    "date": "2023-07-05",
+    "branch_id":"TK-15",
+    "id_bill":"POS0017-41525238",
+    "data_type": "OK"
+  }
+]
