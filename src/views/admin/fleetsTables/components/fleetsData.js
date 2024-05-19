@@ -49,6 +49,14 @@ export default function FleetData(props) {
   const [data, setFleets] = useState([]);
   const [inputName, setName] = useState();
   const [inputDesc, setDesc] = useState();
+  const [inputFleetName, setFleetName] = useState();
+  const [inputFleetCapacity, setFleetCapacity] = useState();
+  const [inputFleetLuggage, setFleetLuggage] = useState();
+  const [inputFleetYear, setFleetYear] = useState();
+  const [inputFleetPriceHour, setFleetPriceHour] = useState();
+  const [inputFleetHour, setFleetHour] = useState();
+  const [inputFleetPriceDay, setFleetPriceDay] = useState();
+  const [inputFleetDay, setFleetDay] = useState();
   const [inputImage, setImage] = useState(null);
   const [alert, setAlert] = useState(false);
   const [selectedRow, setSelectedRow] = useState();
@@ -146,6 +154,199 @@ export default function FleetData(props) {
       px="0px"
       overflowX={{ sm: "scroll", md: "scroll", lg: "scroll" }}
     >
+      {/* Modal For Create Services */}
+      <Modal
+        isCentered
+        closeOnOverlayClick={false}
+        isOpen={isOpenCreate}
+        onClose={onCloseCreate}
+      >
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(0deg)"
+        />
+
+        <ModalContent>
+          {isVisible ? (
+            <Alert status="success">
+              <AlertIcon />
+              <Box>
+                <AlertTitle>Insert Success!</AlertTitle>
+                <AlertDescription>
+                  Your data has been inserted to database.
+                </AlertDescription>
+              </Box>
+            </Alert>
+          ) : (
+            <></>
+          )}
+          <ModalHeader>Insert Services</ModalHeader>
+          <ModalBody>
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Name
+            </Text>
+            <Input
+              focusBorderColor="black"
+              placeholder="Input Services Name"
+              borderRadius="10px"
+              mb={3}
+              value={inputName}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Description
+            </Text>
+            <Textarea
+              focusBorderColor="black"
+              placeholder="Here is a description"
+              borderRadius="10px"
+              value={inputDesc}
+              mb={3}
+              onChange={(e) => setDesc(e.target.value)}
+            />
+            <Image
+              url={inputImage}
+              previousImage={inputImage}
+              size={150}
+              onUpload={(event, url) => {
+                setImage(url);
+              }}
+            />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button mr={3} onClick={onCloseCreate}>
+              Cancel
+            </Button>
+            <Button colorScheme="facebook" onClick={() => insertServices()}>
+              Save
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Modal For Update Service */}
+      <Modal
+        isCentered
+        closeOnOverlayClick={false}
+        isOpen={isOpenUpdate}
+        onClose={onCloseUpdate}
+      >
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(0deg)"
+        />
+        <ModalContent>
+          {isVisible ? (
+            <Alert status="success">
+              <AlertIcon />
+              <Box>
+                <AlertTitle>Update Success!</AlertTitle>
+                <AlertDescription>
+                  Your data has been updated to database.
+                </AlertDescription>
+              </Box>
+            </Alert>
+          ) : (
+            <></>
+          )}
+          <ModalHeader>Update Service</ModalHeader>
+          <ModalBody>
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Name
+            </Text>
+            <Input
+              focusBorderColor="black"
+              placeholder="Input Services Name"
+              borderRadius="10px"
+              mb={3}
+              value={inputName}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Description
+            </Text>
+            <Textarea
+              focusBorderColor="black"
+              placeholder="Here is a description"
+              borderRadius="10px"
+              value={inputDesc}
+              mb={3}
+              onChange={(e) => setDesc(e.target.value)}
+            />
+            <Image
+              url={inputImage}
+              previousImage={inputImage}
+              size={150}
+              onUpload={(event, url) => {
+                setImage(url);
+              }}
+            />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button mr={3} onClick={onCloseUpdate}>
+              Cancel
+            </Button>
+            <Button
+              colorScheme="facebook"
+              onClick={() => updateServices(selectedRow)}
+            >
+              Save
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Alert For Delete Service */}
+      <AlertDialog
+        isOpen={isOpenDelete}
+        leastDestructiveRef={cancelRef}
+        onClose={onCloseDelete}
+      >
+        <AlertDialogOverlay
+          bg="none"
+          backdropFilter="auto"
+          backdropInvert="100%"
+        >
+          <AlertDialogContent>
+            {isVisible ? (
+              <Alert status="success">
+                <AlertIcon />
+                <Box>
+                  <AlertTitle>Delete Success!</AlertTitle>
+                  <AlertDescription>
+                    Your data has been deleted from database.
+                  </AlertDescription>
+                </Box>
+              </Alert>
+            ) : (
+              <></>
+            )}
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Services
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onCloseDelete}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={() => deleteServices(selectedRow)}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+
       <Flex px="25px" justify="space-between" mb="20px" align="center">
         <Text
           color={textColor}
