@@ -36,6 +36,7 @@ import {
   Stack,
   Textarea,
   Heading,
+  HStack,
 } from "@chakra-ui/react";
 import Image from "views/admin/imageUpload";
 import React, { useMemo, useEffect, useState } from "react";
@@ -182,7 +183,6 @@ export default function FleetData(props) {
     }
   };
 
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -253,6 +253,8 @@ export default function FleetData(props) {
         closeOnOverlayClick={false}
         isOpen={isOpenCreate}
         onClose={onCloseCreate}
+        size={'xl'}
+        scrollBehavior={'inside'}
       >
         <ModalOverlay
           bg="blackAlpha.300"
@@ -275,7 +277,7 @@ export default function FleetData(props) {
           )}
           <ModalHeader>Insert Services</ModalHeader>
           <ModalBody>
-            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+          <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Name
             </Text>
             <Input
@@ -286,6 +288,103 @@ export default function FleetData(props) {
               value={inputName}
               onChange={(e) => setName(e.target.value)}
             />
+            <HStack spacing="24px">
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Capacity
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Luggage
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Year
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+            </HStack>
+            <HStack spacing="24px">
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Price Hour
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Hour
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+            </HStack>
+            <HStack spacing="24px">
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Price Day
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Day
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+            </HStack>
             <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Description
             </Text>
@@ -324,6 +423,8 @@ export default function FleetData(props) {
         closeOnOverlayClick={false}
         isOpen={isOpenUpdate}
         onClose={onCloseUpdate}
+        size={'xl'}
+        scrollBehavior={'inside'}
       >
         <ModalOverlay
           bg="blackAlpha.300"
@@ -345,7 +446,7 @@ export default function FleetData(props) {
           )}
           <ModalHeader>Update Service</ModalHeader>
           <ModalBody>
-            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+          <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Name
             </Text>
             <Input
@@ -356,6 +457,103 @@ export default function FleetData(props) {
               value={inputName}
               onChange={(e) => setName(e.target.value)}
             />
+            <HStack spacing="24px">
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Capacity
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Luggage
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Year
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+            </HStack>
+            <HStack spacing="24px">
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Price Hour
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Hour
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+            </HStack>
+            <HStack spacing="24px">
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Price Day
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Day
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Services Name"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputName}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Box>
+            </HStack>
             <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Description
             </Text>
