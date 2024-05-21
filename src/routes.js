@@ -13,6 +13,7 @@ import {
 import MainDashboard from "views/admin/default";
 import ServiceTables from "views/admin/servicesTables";
 import FleetTables from "views/admin/fleetsTables";
+import FaqTables from "views/admin/faqsTables";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -49,6 +50,14 @@ const routes = [
     icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
     path: "/fleets",
     component: FleetTables,
+    AuthRequired: true,
+  },
+  {
+    name: "Faqs",
+    layout: "/admin",
+    icon: <Icon as={MdSource} width="20px" height="20px" color="inherit" />,
+    path: "/faqs",
+    component: FaqTables,
     AuthRequired: true,
   },
   {
