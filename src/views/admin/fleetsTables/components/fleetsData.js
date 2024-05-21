@@ -7,7 +7,6 @@ import {
   Td,
   Flex,
   Text,
-  Icon,
   Box,
   useColorModeValue,
   Button,
@@ -29,13 +28,8 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightElement,
-  CloseButton,
   Stack,
   Textarea,
-  Heading,
   HStack,
 } from "@chakra-ui/react";
 import Image from "views/admin/imageUpload";
@@ -46,9 +40,6 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
-import { useHistory } from "react-router-dom";
-import AuthService from "services/auth.services.js";
-import UtilService from "services/util.service.js";
 // Custom component
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
@@ -56,14 +47,7 @@ import Pagination from "components/dataDisplay/Pagination";
 import { createClient } from "@supabase/supabase-js";
 
 // Assets
-import {
-  MdCheckCircle,
-  MdCancel,
-  MdOutlineError,
-  MdUpdate,
-  MdDelete,
-  MdCreate,
-} from "react-icons/md";
+import { MdUpdate, MdDelete, MdCreate } from "react-icons/md";
 
 export default function FleetData(props) {
   const { columnsData } = props;
@@ -72,7 +56,6 @@ export default function FleetData(props) {
     process.env.REACT_APP_ANON_KEY
   );
   const [data, setFleets] = useState([]);
-  const [inputName, setName] = useState();
   const [inputDesc, setDesc] = useState();
   const [inputFleetName, setFleetName] = useState();
   const [inputFleetCapacity, setFleetCapacity] = useState();
@@ -116,12 +99,23 @@ export default function FleetData(props) {
     onClose: onCloseDelete,
   } = useDisclosure();
 
-  const insertServices = async () => {
+  const insertFleets = async () => {
     try {
       const { data, error } = await supabase
-        .from("services")
+        .from("fleets")
         .insert([
-          { name: inputName, description: inputDesc, image_url: inputImage },
+          {
+            fleet_name: inputFleetName,
+            fleet_desc: inputDesc,
+            fleet_capacity: inputFleetCapacity,
+            fleet_luggage: inputFleetLuggage,
+            fleet_year: inputFleetYear,
+            fleet_price_hour: inputFleetPriceHour,
+            fleet_hour: inputFleetHour,
+            fleet_price_day: inputFleetPriceDay,
+            fleet_day: inputFleetDay,
+            image_url: inputImage,
+          },
         ])
         .select()
         .then((data) => {
@@ -135,16 +129,23 @@ export default function FleetData(props) {
     }
   };
 
-  const updateServices = async (dataServices) => {
+  const updateFleets = async (dataFleets) => {
     try {
       const { data, error } = await supabase
-        .from("services")
+        .from("fleets")
         .update({
-          name: inputName,
-          description: inputDesc,
+          fleet_name: inputFleetName,
+          fleet_desc: inputDesc,
+          fleet_capacity: inputFleetCapacity,
+          fleet_luggage: inputFleetLuggage,
+          fleet_year: inputFleetYear,
+          fleet_price_hour: inputFleetPriceHour,
+          fleet_hour: inputFleetHour,
+          fleet_price_day: inputFleetPriceDay,
+          fleet_day: inputFleetDay,
           image_url: inputImage,
         })
-        .eq("id", dataServices.row.allCells[0].value)
+        .eq("id", dataFleets.row.allCells[0].value)
         .select()
         .then((data) => {
           onOpen(true);
@@ -157,18 +158,18 @@ export default function FleetData(props) {
     }
   };
 
-  const deleteServices = async (dataServices) => {
-    console.log(dataServices.row.allCells[3].value);
+  const deleteFleets = async (dataFleets) => {
+    console.log(dataFleets.row.allCells[3].value);
 
     try {
       const { data, error } = await supabase
-        .from("services")
+        .from("fleets")
         .delete()
-        .eq("id", dataServices.row.allCells[0].value);
+        .eq("id", dataFleets.row.allCells[0].value);
 
       const { error: removeError } = await supabase.storage
         .from("images")
-        .remove(dataServices.row.allCells[3].value)
+        .remove(dataFleets.row.allCells[10].value)
         .then((data) => {
           onOpen(true);
           setTimeout(() => {
@@ -202,7 +203,11 @@ export default function FleetData(props) {
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageCount: 1 },
+      initialState: {
+        pageIndex: 0,
+        pageCount: 1,
+        hiddenColumns: ["id", "fleet_desc"],
+      },
       manualPagination: true,
       pageCount: 1,
       autoResetPage: !skipPageResetRef.current,
@@ -225,18 +230,25 @@ export default function FleetData(props) {
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
   function setRowUpdate(data) {
-    console.log(data.row.cells[2].value);
+    console.log("INI DATA FLEET", data);
     setSelectedRow(data);
-    setName(data.row.cells[0].value);
-    setDesc(data.row.cells[1].value);
-    setImage(data.row.cells[2].value);
+    setFleetName(data.row.allCells[1].value);
+    setDesc(data.row.allCells[2].value);
+    setFleetCapacity(data.row.allCells[3].value);
+    setFleetLuggage(data.row.allCells[4].value);
+    setFleetYear(data.row.allCells[5].value);
+    setFleetPriceHour(data.row.allCells[6].value);
+    setFleetHour(data.row.allCells[7].value);
+    setFleetPriceDay(data.row.allCells[8].value);
+    setFleetDay(data.row.allCells[9].value);
+    setImage(data.row.allCells[10].value);
     onOpenUpdate(true);
   }
 
   function setRowDelete(data) {
     setSelectedRow(data);
-    setName(data.row.cells[0].value);
-    setDesc(data.row.cells[1].value);
+    setFleetName(data.row.allCells[1].value);
+    setDesc(data.row.allCells[2].value);
     onOpenDelete(true);
   }
 
@@ -247,14 +259,14 @@ export default function FleetData(props) {
       px="0px"
       overflowX={{ sm: "scroll", md: "scroll", lg: "scroll" }}
     >
-      {/* Modal For Create Services */}
+      {/* Modal For Create Fleets */}
       <Modal
         isCentered
         closeOnOverlayClick={false}
         isOpen={isOpenCreate}
         onClose={onCloseCreate}
-        size={'xl'}
-        scrollBehavior={'inside'}
+        size={"xl"}
+        scrollBehavior={"inside"}
       >
         <ModalOverlay
           bg="blackAlpha.300"
@@ -275,18 +287,18 @@ export default function FleetData(props) {
           ) : (
             <></>
           )}
-          <ModalHeader>Insert Services</ModalHeader>
+          <ModalHeader>Insert Fleets</ModalHeader>
           <ModalBody>
-          <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Name
             </Text>
             <Input
               focusBorderColor="black"
-              placeholder="Input Services Name"
+              placeholder="Input Fleets Name"
               borderRadius="10px"
               mb={3}
-              value={inputName}
-              onChange={(e) => setName(e.target.value)}
+              value={inputFleetName}
+              onChange={(e) => setFleetName(e.target.value)}
             />
             <HStack spacing="24px">
               <Box>
@@ -295,11 +307,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Capacity"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetCapacity}
+                  onChange={(e) => setFleetCapacity(e.target.value)}
                 />
               </Box>
               <Box>
@@ -308,11 +320,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Luggage"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetLuggage}
+                  onChange={(e) => setFleetLuggage(e.target.value)}
                 />
               </Box>
               <Box>
@@ -321,11 +333,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Year"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetYear}
+                  onChange={(e) => setFleetYear(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -336,11 +348,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Price Hour"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetPriceHour}
+                  onChange={(e) => setFleetPriceHour(e.target.value)}
                 />
               </Box>
               <Box>
@@ -349,11 +361,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Hour"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetHour}
+                  onChange={(e) => setFleetHour(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -364,11 +376,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Price Day"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetPriceDay}
+                  onChange={(e) => setFleetPriceDay(e.target.value)}
                 />
               </Box>
               <Box>
@@ -377,11 +389,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Day"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetDay}
+                  onChange={(e) => setFleetDay(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -410,7 +422,7 @@ export default function FleetData(props) {
             <Button mr={3} onClick={onCloseCreate}>
               Cancel
             </Button>
-            <Button colorScheme="facebook" onClick={() => insertServices()}>
+            <Button colorScheme="facebook" onClick={() => insertFleets()}>
               Save
             </Button>
           </ModalFooter>
@@ -423,8 +435,8 @@ export default function FleetData(props) {
         closeOnOverlayClick={false}
         isOpen={isOpenUpdate}
         onClose={onCloseUpdate}
-        size={'xl'}
-        scrollBehavior={'inside'}
+        size={"xl"}
+        scrollBehavior={"inside"}
       >
         <ModalOverlay
           bg="blackAlpha.300"
@@ -446,16 +458,16 @@ export default function FleetData(props) {
           )}
           <ModalHeader>Update Service</ModalHeader>
           <ModalBody>
-          <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Name
             </Text>
             <Input
               focusBorderColor="black"
-              placeholder="Input Services Name"
+              placeholder="Input Fleets Name"
               borderRadius="10px"
               mb={3}
-              value={inputName}
-              onChange={(e) => setName(e.target.value)}
+              value={inputFleetName}
+              onChange={(e) => setFleetName(e.target.value)}
             />
             <HStack spacing="24px">
               <Box>
@@ -464,11 +476,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Capacity"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetCapacity}
+                  onChange={(e) => setFleetCapacity(e.target.value)}
                 />
               </Box>
               <Box>
@@ -477,11 +489,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Luggage"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetLuggage}
+                  onChange={(e) => setFleetLuggage(e.target.value)}
                 />
               </Box>
               <Box>
@@ -490,11 +502,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Year"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetYear}
+                  onChange={(e) => setFleetYear(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -505,11 +517,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Price Hour"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetPriceHour}
+                  onChange={(e) => setFleetPriceHour(e.target.value)}
                 />
               </Box>
               <Box>
@@ -518,11 +530,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Hour"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetHour}
+                  onChange={(e) => setFleetHour(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -533,11 +545,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Price Day"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetPriceDay}
+                  onChange={(e) => setFleetPriceDay(e.target.value)}
                 />
               </Box>
               <Box>
@@ -546,11 +558,11 @@ export default function FleetData(props) {
                 </Text>
                 <Input
                   focusBorderColor="black"
-                  placeholder="Input Services Name"
+                  placeholder="Input Day"
                   borderRadius="10px"
                   mb={3}
-                  value={inputName}
-                  onChange={(e) => setName(e.target.value)}
+                  value={inputFleetDay}
+                  onChange={(e) => setFleetDay(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -581,7 +593,7 @@ export default function FleetData(props) {
             </Button>
             <Button
               colorScheme="facebook"
-              onClick={() => updateServices(selectedRow)}
+              onClick={() => updateFleets(selectedRow)}
             >
               Save
             </Button>
@@ -615,7 +627,7 @@ export default function FleetData(props) {
               <></>
             )}
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Services
+              Delete Fleets
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -628,7 +640,7 @@ export default function FleetData(props) {
               </Button>
               <Button
                 colorScheme="red"
-                onClick={() => deleteServices(selectedRow)}
+                onClick={() => deleteFleets(selectedRow)}
                 ml={3}
               >
                 Delete
@@ -664,8 +676,15 @@ export default function FleetData(props) {
           size="md"
           borderRadius="lg"
           onClick={() => {
-            setName(null);
+            setFleetName(null);
             setDesc(null);
+            setFleetCapacity(null);
+            setFleetLuggage(null);
+            setFleetYear(null);
+            setFleetPriceHour(null);
+            setFleetHour(null);
+            setFleetPriceDay(null);
+            setFleetDay(null);
             setImage(null);
             onOpenCreate();
           }}
