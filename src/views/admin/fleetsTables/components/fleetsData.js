@@ -8,12 +8,36 @@ import {
   Flex,
   Text,
   Icon,
+  Box,
   useColorModeValue,
-  useDisclosure,
   Button,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogBody,
+  AlertDialogFooter,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightElement,
+  CloseButton,
   Stack,
+  Textarea,
+  Heading,
 } from "@chakra-ui/react";
-
+import Image from "views/admin/imageUpload";
 import React, { useMemo, useEffect, useState } from "react";
 import {
   useGlobalFilter,
@@ -63,6 +87,7 @@ export default function FleetData(props) {
 
   // ref variable
   const skipPageResetRef = React.useRef();
+  const cancelRef = React.useRef();
   // memo variable
   const columns = useMemo(() => columnsData, [columnsData]);
 
@@ -89,6 +114,74 @@ export default function FleetData(props) {
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure();
+
+  const insertServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("services")
+        .insert([
+          { name: inputName, description: inputDesc, image_url: inputImage },
+        ])
+        .select()
+        .then((data) => {
+          onOpen(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const updateServices = async (dataServices) => {
+    try {
+      const { data, error } = await supabase
+        .from("services")
+        .update({
+          name: inputName,
+          description: inputDesc,
+          image_url: inputImage,
+        })
+        .eq("id", dataServices.row.allCells[0].value)
+        .select()
+        .then((data) => {
+          onOpen(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const deleteServices = async (dataServices) => {
+    console.log(dataServices.row.allCells[3].value);
+
+    try {
+      const { data, error } = await supabase
+        .from("services")
+        .delete()
+        .eq("id", dataServices.row.allCells[0].value);
+
+      const { error: removeError } = await supabase.storage
+        .from("images")
+        .remove(dataServices.row.allCells[3].value)
+        .then((data) => {
+          onOpen(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
+        });
+      if (removeError) {
+        throw removeError;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
 
   const {
     getTableProps,
