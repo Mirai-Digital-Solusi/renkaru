@@ -4,12 +4,12 @@ export const columnsFaqsData = [
     accessor: "id",
   },
   {
-    Header: "FAQ ANSWER",
-    accessor: "faq_answer",
-  },
-  {
     Header: "FAQ QUESTION",
     accessor: "faq_question",
+  },
+  {
+    Header: "FAQ ANSWER",
+    accessor: "faq_answer",
   },
   {
     Header: "UPDATE",

@@ -472,13 +472,13 @@ export default function FaqData(props) {
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "FAQ ANSWER") {
+                  } else if (cell.column.Header === "FAQ QUESTION") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "FAQ QUESTION") {
+                  } else if (cell.column.Header === "FAQ ANSWER") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}

@@ -2,11 +2,12 @@ import React from "react";
 
 import { Icon } from "@chakra-ui/react";
 import {
-  MdList,
+  MdEmojiTransportation,
   MdHome,
   MdLock,
   MdSource,
-  MdGroup,
+  MdBusiness,
+  MdQuestionAnswer,
 } from "react-icons/md";
 
 // Admin Imports
@@ -14,6 +15,7 @@ import MainDashboard from "views/admin/default";
 import ServiceTables from "views/admin/servicesTables";
 import FleetTables from "views/admin/fleetsTables";
 import FaqTables from "views/admin/faqsTables";
+import ContactData from "views/admin/contactData";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -47,7 +49,7 @@ const routes = [
   {
     name: "Fleets",
     layout: "/admin",
-    icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdEmojiTransportation} width="20px" height="20px" color="inherit" />,
     path: "/fleets",
     component: FleetTables,
     AuthRequired: true,
@@ -55,9 +57,17 @@ const routes = [
   {
     name: "Faqs",
     layout: "/admin",
-    icon: <Icon as={MdSource} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdQuestionAnswer} width="20px" height="20px" color="inherit" />,
     path: "/faqs",
     component: FaqTables,
+    AuthRequired: true,
+  },
+  {
+    name: "Contact",
+    layout: "/admin",
+    icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
+    path: "/contact",
+    component: ContactData,
     AuthRequired: true,
   },
   {
