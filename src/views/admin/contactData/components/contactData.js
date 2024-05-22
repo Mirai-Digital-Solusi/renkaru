@@ -1,66 +1,25 @@
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Flex,
   Text,
-  Icon,
   Box,
   useColorModeValue,
   Button,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogBody,
-  AlertDialogFooter,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightElement,
-  CloseButton,
   Stack,
-  Textarea,
-  Heading,
-  HStack,
   SimpleGrid,
 } from "@chakra-ui/react";
-import React, { useMemo, useEffect, useState } from "react";
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
+import React, { useEffect, useState } from "react";
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
-import Pagination from "components/dataDisplay/Pagination";
 import { createClient } from "@supabase/supabase-js";
 
 // Assets
-import {
-  MdCheckCircle,
-  MdCancel,
-  MdOutlineError,
-  MdCreate,
-  MdUpdate,
-  MdDelete,
-} from "react-icons/md";
+import { MdUpdate } from "react-icons/md";
 
 export default function FaqData(props) {
   const supabase = createClient(
@@ -120,7 +79,6 @@ export default function FaqData(props) {
   }
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
   return (
     <Card
@@ -158,18 +116,18 @@ export default function FaqData(props) {
           Save
         </Button>
         {isVisible ? (
-            <Alert status="success">
-              <AlertIcon />
-              <Box>
-                <AlertTitle>Update Success!</AlertTitle>
-                <AlertDescription>
-                  Your data has been updated to database.
-                </AlertDescription>
-              </Box>
-            </Alert>
-          ) : (
-            <></>
-          )}
+          <Alert status="success">
+            <AlertIcon />
+            <Box>
+              <AlertTitle>Update Success!</AlertTitle>
+              <AlertDescription>
+                Your data has been updated to database.
+              </AlertDescription>
+            </Box>
+          </Alert>
+        ) : (
+          <></>
+        )}
       </Stack>
 
       <SimpleGrid columns={[1, null, 2]} spacing="40px" px="20px">

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { Button } from "@chakra-ui/react";
-import { MdFileUpload } from "react-icons/md";
 
 export default function Image({ url, size, onUpload, previousImage }) {
   const [imageUrl, setImageUrl] = useState(null);
@@ -51,7 +50,7 @@ export default function Image({ url, size, onUpload, previousImage }) {
 
         const { error: removeError } = await supabase.storage
           .from("images")
-          .remove(previousImage)
+          .remove(previousImage);
         if (uploadError || removeError) {
           throw uploadError;
         }

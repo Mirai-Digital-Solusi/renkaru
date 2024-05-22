@@ -8,6 +8,7 @@ import {
   MdSource,
   MdBusiness,
   MdQuestionAnswer,
+  MdDesignServices,
 } from "react-icons/md";
 
 // Admin Imports
@@ -15,6 +16,7 @@ import MainDashboard from "views/admin/default";
 import ServiceTables from "views/admin/servicesTables";
 import FleetTables from "views/admin/fleetsTables";
 import FaqTables from "views/admin/faqsTables";
+import TestimonialTables from "views/admin/testimonialsTables";
 import ContactData from "views/admin/contactData";
 
 // Auth Imports
@@ -60,6 +62,14 @@ const routes = [
     icon: <Icon as={MdQuestionAnswer} width="20px" height="20px" color="inherit" />,
     path: "/faqs",
     component: FaqTables,
+    AuthRequired: true,
+  },
+  {
+    name: "Testimonials",
+    layout: "/admin",
+    icon: <Icon as={MdDesignServices} width="20px" height="20px" color="inherit" />,
+    path: "/testimonials",
+    component: TestimonialTables,
     AuthRequired: true,
   },
   {
