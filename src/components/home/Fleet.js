@@ -13,11 +13,14 @@ import {
   StackProps,
   Center,
   Tag,
+  TagLabel,
+  TagRightIcon,
+  Link,
   SimpleGrid,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import { AiOutlineHeart, AiOutlineExclamationCircle } from "react-icons/ai";
-import { BsTelephoneX } from "react-icons/bs";
+import { BsTelephoneX, BsArrowUpRightCircle } from "react-icons/bs";
 
 // interface ProductCardProps {
 //   id: number;
@@ -176,6 +179,19 @@ export default function Fleet() {
           </Stack>
         ))}
       </SimpleGrid>
+
+      <Center h={{ base: 20, md: 50 }}>
+        <Link href="#" mt={20} fontSize="sm" color="blue.400">
+          <Tag
+            size={"lg"}
+            variant="solid"
+            bgGradient="linear(to-r, teal.400, green.500)"
+          >
+            <TagLabel>See Details</TagLabel>
+            <TagRightIcon as={BsArrowUpRightCircle} />
+          </Tag>
+        </Link>
+      </Center>
     </Container>
   );
 }
