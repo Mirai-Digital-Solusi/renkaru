@@ -1,4 +1,4 @@
-import { PropsWithChildren, Fragment } from 'react';
+import { PropsWithChildren, Fragment } from "react";
 import {
   chakra,
   Box,
@@ -14,10 +14,10 @@ import {
   Center,
   Tag,
   SimpleGrid,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
-import { AiOutlineHeart, AiOutlineExclamationCircle } from 'react-icons/ai';
-import { BsTelephoneX } from 'react-icons/bs';
+import { AiOutlineHeart, AiOutlineExclamationCircle } from "react-icons/ai";
+import { BsTelephoneX } from "react-icons/bs";
 
 // interface ProductCardProps {
 //   id: number;
@@ -33,48 +33,61 @@ import { BsTelephoneX } from 'react-icons/bs';
 const productsList = [
   {
     id: 1,
-    title: 'Ford F-150 SUV 2021',
-    location: 'Paris',
-    detail: ['2021', 'Petrol', '4500 cc', 'Automatic'],
-    updated_at: '17 days ago',
-    price: '$ 400k',
+    title: "Ford F-150 SUV 2021",
+    location: "Paris",
+    detail: ["2021", "Petrol", "4500 cc", "Automatic"],
+    updated_at: "17 days ago",
+    price: "$ 400k",
     isFeatured: true,
     image:
-      'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb'
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
   },
   {
     id: 2,
-    title: 'Haval Jolion Top',
-    location: 'New York',
-    detail: ['2021', 'Petrol', '3500 cc', 'Automatic'],
-    updated_at: '1 days ago',
-    price: '$ 450k',
+    title: "Haval Jolion Top",
+    location: "New York",
+    detail: ["2021", "Petrol", "3500 cc", "Automatic"],
+    updated_at: "1 days ago",
+    price: "$ 450k",
     image:
-      'https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb'
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
   },
 ];
 
 export default function Fleet() {
   return (
     <Container maxW="7xl" p={{ base: 5, md: 12 }} margin="0 auto">
-        <Center h={{ base: 20, md: 50 }}>
-        <Tag size='lg' variant='solid' colorScheme='teal' borderRadius='full' marginInline="auto">Our Fleet</Tag>
-</Center>
-        
+      <Center h={{ base: 20, md: 50 }}>
+        <Tag
+          size="lg"
+          variant="solid"
+          colorScheme="teal"
+          borderRadius="full"
+          marginInline="auto"
+        >
+          Our Fleet
+        </Tag>
+      </Center>
+
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
-      Explore Our Car Lineup
+        Explore Our Car Lineup
       </chakra.h3>
-      <SimpleGrid columns={{ base: 1, sm: 1, md: 2 }} placeItems="center" spacing={5} mb={4}>
+      <SimpleGrid
+        columns={{ base: 1, sm: 1, md: 2 }}
+        placeItems="center"
+        spacing={5}
+        mb={4}
+      >
         {productsList.map((product, index) => (
           <Stack
             key={index}
             spacing={{ base: 0, md: 4 }}
-            direction={{ base: 'column', md: 'row' }}
+            direction={{ base: "column", md: "row" }}
             border="0.5px solid"
             borderColor="gray.400"
             p={4}
             rounded="md"
-            w={{ base: 'auto', md: 'auto' }}
+            w={{ base: "auto", md: "auto" }}
             overflow="hidden"
             pos="relative"
           >
@@ -90,25 +103,37 @@ export default function Fleet() {
                 top={0}
                 left={0}
               >
-                <Text>FEATURED</Text> &nbsp; <Icon as={AiOutlineExclamationCircle} h={4} w={4} />
+                <Text>FEATURED</Text> &nbsp;{" "}
+                <Icon as={AiOutlineExclamationCircle} h={4} w={4} />
               </Flex>
             )}
             <Flex ml="0 !important">
               <Image
                 rounded="md"
-                w={{ base: '100%', md: '18rem' }}
+                w={{ base: "100%", md: "18rem" }}
                 h="auto"
                 objectFit="cover"
                 src={product.image}
                 alt="product image"
               />
             </Flex>
-            <Stack direction="column" spacing={2} w="100%" mt={{ base: '5px !important', sm: 0 }}>
+            <Stack
+              direction="column"
+              spacing={2}
+              w="100%"
+              mt={{ base: "5px !important", sm: 0 }}
+            >
               <Flex justifyContent="space-between">
-                <chakra.h3 fontSize={{ base: 'lg', md: 'xl' }} fontWeight="bold">
+                <chakra.h3
+                  fontSize={{ base: "lg", md: "xl" }}
+                  fontWeight="bold"
+                >
                   {product.title}
                 </chakra.h3>
-                <chakra.h3 fontSize={{ base: 'lg', md: 'xl' }} fontWeight="bold">
+                <chakra.h3
+                  fontSize={{ base: "lg", md: "xl" }}
+                  fontWeight="bold"
+                >
                   {product.price}
                 </chakra.h3>
               </Flex>
@@ -120,9 +145,9 @@ export default function Fleet() {
               <Flex alignItems="center" color="gray.500">
                 {product.detail.map((data, index) => (
                   <Fragment key={index}>
-                    <Text fontSize={{ base: 'sm', sm: 'md' }}>{data}</Text>
+                    <Text fontSize={{ base: "sm", sm: "md" }}>{data}</Text>
                     {product.detail.length - 1 != index && (
-                      <chakra.span mx={2} fontSize={{ base: 'sm', sm: 'md' }}>
+                      <chakra.span mx={2} fontSize={{ base: "sm", sm: "md" }}>
                         |
                       </chakra.span>
                     )}
@@ -130,9 +155,9 @@ export default function Fleet() {
                 ))}
               </Flex>
               <Stack
-                direction={{ base: 'column-reverse', sm: 'row' }}
+                direction={{ base: "column-reverse", sm: "row" }}
                 justifyContent="space-between"
-                alignItems={{ base: 'flex-start', sm: 'center' }}
+                alignItems={{ base: "flex-start", sm: "center" }}
               >
                 <Text fontSize="sm" mt={{ base: 1, sm: 0 }}>
                   Updated {product.updated_at}
@@ -153,9 +178,9 @@ export default function Fleet() {
       </SimpleGrid>
     </Container>
   );
-};
+}
 
-const IconButton = ({ children, ...props }: PropsWithChildren<StackProps>) => {
+const IconButton = ({ children, ...props }) => {
   return (
     <HStack
       cursor="pointer"
@@ -172,4 +197,3 @@ const IconButton = ({ children, ...props }: PropsWithChildren<StackProps>) => {
     </HStack>
   );
 };
-
