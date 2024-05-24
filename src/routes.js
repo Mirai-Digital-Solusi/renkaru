@@ -19,11 +19,22 @@ import FaqTables from "views/admin/faqsTables";
 import TestimonialTables from "views/admin/testimonialsTables";
 import ContactData from "views/admin/contactData";
 
+// Public Imports
+import HomePublic from "views/main/home";
+
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 
 
 const routes = [
+  {
+    name: "Home",
+    layout: "/main",
+    path: "/home",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: HomePublic,
+    AuthRequired: false,
+  },
   {
     name: "Dashboard",
     layout: "/admin",
