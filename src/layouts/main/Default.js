@@ -6,6 +6,7 @@ import Footer from "components/footer/FooterAuth";
 import Service from "components/home/Service"
 import Fleet from "components/home/Fleet"
 import Testimonial from "components/home/Testimonial"
+import Contact from "components/home/Contact"
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 // Custom components
 import { NavLink } from "react-router-dom";
@@ -30,6 +31,9 @@ function AuthIllustration(props) {
     </Flex>
     <Flex position='relative' h='max-content'>
     <Testimonial />
+    </Flex>
+    <Flex position='relative' h='max-content'>
+    <Contact />
     </Flex>
  </>
   );
