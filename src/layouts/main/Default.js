@@ -3,6 +3,7 @@ import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import React from "react";
 import Footer from "components/footer/FooterMain";
+import Header from "components/navbar/NavbarMain";
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 // Custom components
 import { NavLink } from "react-router-dom";
@@ -14,7 +15,9 @@ function AuthIllustration(props) {
   // Chakra color mode
   return (
     <>
+    <Header />
       {children}
+      <FixedPlugin />
       <Footer />
     </>
   );
