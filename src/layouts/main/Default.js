@@ -2,12 +2,7 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import React from "react";
-import Footer from "components/footer/FooterAuth";
-import Service from "components/home/Service"
-import Fleet from "components/home/Fleet"
-import Testimonial from "components/home/Testimonial"
-import Contact from "components/home/Contact"
-import Faq from "components/home/Faq"
+import Footer from "components/footer/FooterMain";
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 // Custom components
 import { NavLink } from "react-router-dom";
@@ -19,27 +14,9 @@ function AuthIllustration(props) {
   // Chakra color mode
   return (
     <>
-    <Flex position='relative' h='max-content'>
-       {children}
-        
-      {/* <FixedPlugin /> */}
-    </Flex>
-    <Flex position='relative' h='max-content'>
-    <Service />
-    </Flex>
-    <Flex position='relative' h='max-content'>
-    <Fleet />
-    </Flex>
-    <Flex position='relative' h='max-content'>
-    <Testimonial />
-    </Flex>
-    <Flex position='relative' h='max-content'>
-    <Faq />
-    </Flex>
-    <Flex position='relative' h='max-content'>
-    <Contact />
-    </Flex>
- </>
+      {children}
+      <Footer />
+    </>
   );
 }
 // PROPS
