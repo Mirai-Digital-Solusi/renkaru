@@ -75,10 +75,14 @@ export default function Faq() {
       </Center>
 
       <chakra.h3 fontSize="4xl" fontWeight="bold" textAlign="center">
-        List of Question 
+        List of Question
       </chakra.h3>
 
-      <Stack direction={{ base: 'column', md: 'row' }} spacing='24px' mt={{ base: 5, md: 20 }}> 
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        spacing="24px"
+        mt={{ base: 5, md: 20 }}
+      >
         <Box mr={{ base: 5, md: 20 }}>
           <VStack
             spacing={10}
@@ -86,16 +90,27 @@ export default function Faq() {
             mb={{ base: 5, md: 0 }}
             maxW="md"
           >
-            <chakra.h2 fontSize="3xl" fontWeight="bold" textAlign={{ base: 'center', md: "left" }} mt={{ base: 10, md: 0 }} m={{ base: "auto", md: 0 }}>
+            <chakra.h2
+              fontSize="3xl"
+              fontWeight="bold"
+              textAlign={{ base: "center", md: "left" }}
+              mt={{ base: 10, md: 0 }}
+              m={{ base: "auto", md: 0 }}
+            >
               FAQ
             </chakra.h2>
-            <Text fontSize="xl" color="gray.600" textAlign={{ base: 'center', md: "left" }} m={{ base: "auto", md: 0 }}>
+            <Text
+              fontSize="xl"
+              color="gray.600"
+              textAlign={{ base: "center", md: "left" }}
+              m={{ base: "auto", md: 0 }}
+            >
               Please check out our FAQs for detailed information and guidance.
             </Text>
           </VStack>
         </Box>
         <Box>
-          <Accordion defaultIndex={[0]} allowMultiple>
+          <Accordion>
             <AccordionItem>
               <h2>
                 <AccordionButton>

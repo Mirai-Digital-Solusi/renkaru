@@ -14,6 +14,7 @@ import {
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import ServiceTables from "views/admin/servicesTables";
+import RentalOrderTables from "views/admin/rentalsOrderTables";
 import FleetTables from "views/admin/fleetsTables";
 import FaqTables from "views/admin/faqsTables";
 import TestimonialTables from "views/admin/testimonialsTables";
@@ -57,6 +58,14 @@ const routes = [
     icon: <Icon as={MdSource} width="20px" height="20px" color="inherit" />,
     path: "/services",
     component: ServiceTables,
+    AuthRequired: true,
+  },
+  {
+    name: "Rentals Order",
+    layout: "/admin",
+    icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
+    path: "/rental-order",
+    component: RentalOrderTables,
     AuthRequired: true,
   },
   {
