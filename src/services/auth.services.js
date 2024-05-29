@@ -21,6 +21,13 @@ const login = async (username, password) => {
         localStorage.setItem("user", JSON.stringify(data.session.access_token));
   }
 
+
+  const dataFleets = await supabase.from("fleets").select("id,fleet_name");
+
+  console.log("contoh data fleets", dataFleets.data);
+  localStorage.setItem("optionFleets", JSON.stringify(dataFleets.data));
+
+
   console.log("data.user.email", data.session.access_token)
   console.log("data.user.email", data.user.email)
   return data
@@ -50,6 +57,7 @@ const logout = async () => {
   localStorage.removeItem("user");
   localStorage.removeItem("branch");
   localStorage.removeItem("optionsBranch");
+  localStorage.removeItem("optionFleets");
   return localStorage.removeItem("user");
 };
 

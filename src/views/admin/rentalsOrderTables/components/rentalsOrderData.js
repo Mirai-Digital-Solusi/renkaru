@@ -37,6 +37,7 @@ import {
   HStack,
   Textarea,
   Heading,
+  Select,
 } from "@chakra-ui/react";
 import Image from "views/admin/imageUpload";
 import React, { useMemo, useEffect, useState } from "react";
@@ -51,6 +52,7 @@ import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
 import Pagination from "components/dataDisplay/Pagination";
 import { createClient } from "@supabase/supabase-js";
+import UtilService from "services/util.service.js";
 
 // Assets
 import {
@@ -63,6 +65,10 @@ import {
 } from "react-icons/md";
 
 export default function RentalOrderData(props) {
+
+  let DateFrom = UtilService.dateFrom;
+  let DateTo = UtilService.dateTo;
+
   const { columnsData } = props;
   const supabase = createClient(
     process.env.REACT_APP_API_KEY,
@@ -81,8 +87,8 @@ export default function RentalOrderData(props) {
   const [inputClientPersonalID, setClientPersonalID] = useState();
   const [inputClientRentedCarID, setClientRentedCarID] = useState();
   const [inputClientRentedCar, setClientRentedCar] = useState();
-  const [inputClientDateRentFrom, setClientDateRentFrom] = useState();
-  const [inputClientDateRentTo, setClientDateRentTo] = useState();
+  const [inputClientDateRentFrom, setClientDateRentFrom] = useState(DateFrom);
+  const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
   const [inputClientHoursRented, setClientHoursRented] = useState();
   const [inputClientRentStatus, setClientRentStatus] = useState();
   const [inputImage, setImage] = useState(null);
@@ -114,17 +120,22 @@ export default function RentalOrderData(props) {
   } = useDisclosure();
 
   const insertRentalOrders = async () => {
+    var dtf = inputClientDateRentFrom.replace('T', ' ')
+    var dtt = inputClientDateRentTo.replace('T', ' ')
+    let fleetId = fleets.find(o => o.fleet_name === inputClientRentedCar);
+
+    console.log("date from", fleetId.id);
     try {
       const { data, error } = await supabase
         .from("rentalOrders")
         .insert([
           {
             client_name: inputClientName,
-            client_personal_id: inputClientName,
-            client_rented_car_id: inputClientRentedCarID,
+            client_personal_id: inputClientPersonalID,
+            client_rented_car_id: fleetId.id,
             client_rented_car: inputClientRentedCar,
-            client_date_rent_from: inputClientDateRentFrom,
-            client_date_rent_to: inputClientDateRentTo,
+            client_date_rent_from: dtf,
+            client_date_rent_to: dtt,
             client_hours_rented: inputClientHoursRented,
             client_rent_status: inputClientRentStatus,
             image_url: inputImage,
@@ -143,16 +154,20 @@ export default function RentalOrderData(props) {
   };
 
   const updateRentalOrders = async (dataRentalOrders) => {
+    var dtf = inputClientDateRentFrom.replace('T', ' ')
+    var dtt = inputClientDateRentTo.replace('T', ' ')
+    let fleetId = fleets.find(o => o.fleet_name === inputClientRentedCar);
+
     try {
       const { data, error } = await supabase
         .from("rentalOrders")
         .update({
           client_name: inputClientName,
-          client_personal_id: inputClientName,
-          client_rented_car_id: inputClientRentedCarID,
+          client_personal_id: inputClientPersonalID,
+          client_rented_car_id: fleetId.id,
           client_rented_car: inputClientRentedCar,
-          client_date_rent_from: inputClientDateRentFrom,
-          client_date_rent_to: inputClientDateRentTo,
+          client_date_rent_from: dtf,
+          client_date_rent_to: dtt,
           client_hours_rented: inputClientHoursRented,
           client_rent_status: inputClientRentStatus,
           image_url: inputImage,
@@ -181,7 +196,7 @@ export default function RentalOrderData(props) {
 
       const { error: removeError } = await supabase.storage
         .from("images")
-        .remove(dataRentalOrders.row.allCells[3].value)
+        .remove(dataRentalOrders.row.allCells[9].value)
         .then((data) => {
           onOpen(true);
           setTimeout(() => {
@@ -235,17 +250,17 @@ export default function RentalOrderData(props) {
   }
 
   function setRowUpdate(data) {
-    console.log(data.row.cells[2].value);
+    console.log(data.row);
     setSelectedRow(data);
     setClientName(data.row.cells[0].value);
     setClientPersonalID(data.row.cells[1].value);
-    setClientRentedCarID(null);
-    setClientRentedCar(null);
-    setClientDateRentFrom(null);
-    setClientDateRentTo(null);
-    setClientHoursRented(null);
-    setClientRentStatus(null);
-    setImage(null);
+    setClientRentedCarID(data.row.cells[2].value);
+    setClientRentedCar(data.row.cells[3].value);
+    setClientDateRentFrom(data.row.cells[4].value);
+    setClientDateRentTo(data.row.cells[5].value);
+    setClientHoursRented(data.row.cells[6].value);
+    setClientRentStatus(data.row.cells[7].value);
+    setImage(data.row.cells[8].value);
     onOpenUpdate(true);
   }
 
@@ -253,15 +268,29 @@ export default function RentalOrderData(props) {
     setSelectedRow(data);
     setClientName(data.row.cells[0].value);
     setClientPersonalID(data.row.cells[1].value);
-    setClientRentedCarID(null);
-    setClientRentedCar(null);
-    setClientDateRentFrom(null);
-    setClientDateRentTo(null);
-    setClientHoursRented(null);
-    setClientRentStatus(null);
     setImage(null);
     onOpenDelete(true);
   }
+
+  const fleets = JSON.parse(localStorage.getItem("optionFleets"));
+
+  const status = [
+    {
+      option: "Booked",
+    },
+    {
+      option: "On Review Payment",
+    },
+    {
+      option: "Ongoing",
+    },
+    {
+      option: "Done",
+    },
+    {
+      option: "Cancelled",
+    },
+  ];
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -314,7 +343,7 @@ export default function RentalOrderData(props) {
               value={inputClientName}
               onChange={(e) => setClientName(e.target.value)}
             />
-            <HStack spacing="24px">
+            <HStack spacing="20px">
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
                   Personal ID
@@ -324,6 +353,7 @@ export default function RentalOrderData(props) {
                   placeholder="Input Personal ID"
                   borderRadius="10px"
                   mb={3}
+                  mr={5}
                   value={inputClientPersonalID}
                   onChange={(e) => setClientPersonalID(e.target.value)}
                 />
@@ -332,41 +362,53 @@ export default function RentalOrderData(props) {
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
                   Rented Car
                 </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Rented Car"
+                <Select
+                  mr={20}
+                  w={"100%"}
                   borderRadius="10px"
                   mb={3}
+                  placeholder="Select option"
                   value={inputClientRentedCar}
                   onChange={(e) => setClientRentedCar(e.target.value)}
-                />
+                >
+                  {fleets.map((fleet, index) => (
+                    <option value={fleet.fleet_name}>{fleet.fleet_name}</option>
+                  ))}
+                </Select>
               </Box>
             </HStack>
             <HStack spacing="24px">
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Date Rent To
-                </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Date Rent To"
-                  borderRadius="10px"
-                  mb={3}
-                  value={inputClientDateRentTo}
-                  onChange={(e) => setClientDateRentTo(e.target.value)}
-                />
-              </Box>
-              <Box>
-                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
                   Date Rent From
                 </Text>
                 <Input
+                  w={"100%"}
                   focusBorderColor="black"
                   placeholder="Input Date Rent From"
                   borderRadius="10px"
                   mb={3}
+                  mr={10}
+                  type="datetime-local"
                   value={inputClientDateRentFrom}
                   onChange={(e) => setClientDateRentFrom(e.target.value)}
+                  
+                />
+              </Box>
+              <Box>
+                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Date Rent To
+                </Text>
+                <Input
+                  w={"100%"}
+                  focusBorderColor="black"
+                  placeholder="Input Date Rent To"
+                  borderRadius="10px"
+                  mb={3}
+                  mr={4}
+                  type="datetime-local"
+                  value={inputClientDateRentTo}
+                  onChange={(e) => setClientDateRentTo(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -380,6 +422,7 @@ export default function RentalOrderData(props) {
                   placeholder="Input Rent Hour"
                   borderRadius="10px"
                   mb={3}
+                  mr={5}
                   value={inputClientHoursRented}
                   onChange={(e) => setClientHoursRented(e.target.value)}
                 />
@@ -388,14 +431,19 @@ export default function RentalOrderData(props) {
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
                   Rent Status
                 </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Rent Status"
+                <Select
+                  mr={"4em"}
+                  w={"100%"}
                   borderRadius="10px"
                   mb={3}
+                  placeholder="Select option"
                   value={inputClientRentStatus}
                   onChange={(e) => setClientRentStatus(e.target.value)}
-                />
+                >
+                  {status.map((statuses, index) => (
+                    <option value={statuses.option}>{statuses.option}</option>
+                  ))}
+                </Select>
               </Box>
             </HStack>
             <Image
@@ -469,6 +517,7 @@ export default function RentalOrderData(props) {
                   placeholder="Input Personal ID"
                   borderRadius="10px"
                   mb={3}
+                  mr={5}
                   value={inputClientPersonalID}
                   onChange={(e) => setClientPersonalID(e.target.value)}
                 />
@@ -477,41 +526,52 @@ export default function RentalOrderData(props) {
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
                   Rented Car
                 </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Rented Car"
+                <Select
+                  mr={20}
+                  w={"100%"}
                   borderRadius="10px"
                   mb={3}
+                  placeholder="Select option"
                   value={inputClientRentedCar}
                   onChange={(e) => setClientRentedCar(e.target.value)}
-                />
+                >
+                  {fleets.map((fleet, index) => (
+                    <option value={fleet.fleet_name}>{fleet.fleet_name}</option>
+                  ))}
+                </Select>
               </Box>
             </HStack>
             <HStack spacing="24px">
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Date Rent To
+                  Date Rent From
                 </Text>
                 <Input
+                  w={"100%"}
                   focusBorderColor="black"
-                  placeholder="Input Date Rent To"
+                  placeholder="Input Date Rent From"
                   borderRadius="10px"
                   mb={3}
+                  mr={10}
+                  type="datetime-local"
                   value={inputClientDateRentTo}
                   onChange={(e) => setClientDateRentTo(e.target.value)}
                 />
               </Box>
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Date Rent From
+                  Date Rent To
                 </Text>
                 <Input
+                  w={"100%"}
                   focusBorderColor="black"
-                  placeholder="Input Date Rent From"
+                  placeholder="Input Date Rent To"
                   borderRadius="10px"
                   mb={3}
-                  value={inputClientDateRentFrom}
-                  onChange={(e) => setClientDateRentFrom(e.target.value)}
+                  mr={4}
+                  type="datetime-local"
+                  value={inputClientDateRentTo}
+                  onChange={(e) => setClientDateRentTo(e.target.value)}
                 />
               </Box>
             </HStack>
@@ -525,6 +585,7 @@ export default function RentalOrderData(props) {
                   placeholder="Input Rent Hour"
                   borderRadius="10px"
                   mb={3}
+                  mr={5}
                   value={inputClientHoursRented}
                   onChange={(e) => setClientHoursRented(e.target.value)}
                 />
@@ -533,14 +594,19 @@ export default function RentalOrderData(props) {
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
                   Rent Status
                 </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Rent Status"
+                <Select
+                  mr={"4em"}
+                  w={"100%"}
                   borderRadius="10px"
                   mb={3}
+                  placeholder="Select option"
                   value={inputClientRentStatus}
                   onChange={(e) => setClientRentStatus(e.target.value)}
-                />
+                >
+                  {status.map((statuses, index) => (
+                    <option value={statuses.option}>{statuses.option}</option>
+                  ))}
+                </Select>
               </Box>
             </HStack>
             <Image
@@ -646,8 +712,8 @@ export default function RentalOrderData(props) {
             setClientPersonalID(null);
             setClientRentedCarID(null);
             setClientRentedCar(null);
-            setClientDateRentFrom(null);
-            setClientDateRentTo(null);
+            // setClientDateRentFrom(null);
+            // setClientDateRentTo(null);
             setClientHoursRented(null);
             setClientRentStatus(null);
             setImage(null);
