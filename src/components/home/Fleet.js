@@ -21,6 +21,8 @@ import {
 // Here we have used react-icons package for the icons
 import { AiOutlineHeart, AiOutlineExclamationCircle } from "react-icons/ai";
 import { BsTelephoneX, BsArrowUpRightCircle } from "react-icons/bs";
+import React, { useMemo, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 // interface ProductCardProps {
 //   id: number;
@@ -33,7 +35,7 @@ import { BsTelephoneX, BsArrowUpRightCircle } from "react-icons/bs";
 //   isFeatured?: boolean;
 // }
 
-const productsList = [
+const fleetssList = [
   {
     id: 1,
     title: "Ford F-150 SUV 2021",
@@ -58,6 +60,25 @@ const productsList = [
 ];
 
 export default function Fleet() {
+
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataFleets, setFleets] = useState([]);
+
+  useEffect(() => {
+    getFleets();
+
+  }, []);
+
+  async function getFleets() {
+    const { data } = await supabase.from("fleets").select().range(0, 4);
+    console.log("data services", data);
+    setFleets(data);
+  }
+
   return (
     <Container maxW="7xl" p={{ base: 5, md: 12 }} margin="0 auto">
       <Center h={{ base: 20, md: 50 }}>
@@ -81,7 +102,7 @@ export default function Fleet() {
         spacing={5}
         mb={4}
       >
-        {productsList.map((product, index) => (
+        {dataFleets.map((fleets, index) => (
           <Stack
             key={index}
             spacing={{ base: 0, md: 4 }}
@@ -94,7 +115,7 @@ export default function Fleet() {
             overflow="hidden"
             pos="relative"
           >
-            {product.isFeatured && (
+            {/* {fleets.isFeatured && (
               <Flex
                 alignItems="center"
                 p={1}
@@ -109,15 +130,15 @@ export default function Fleet() {
                 <Text>FEATURED</Text> &nbsp;{" "}
                 <Icon as={AiOutlineExclamationCircle} h={4} w={4} />
               </Flex>
-            )}
+            )} */}
             <Flex ml="0 !important">
               <Image
                 rounded="md"
                 w={{ base: "100%", md: "18rem" }}
                 h="auto"
                 objectFit="cover"
-                src={product.image}
-                alt="product image"
+                src={"https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" + fleets.image_url}
+                alt="fleets image"
               />
             </Flex>
             <Stack
@@ -131,41 +152,48 @@ export default function Fleet() {
                   fontSize={{ base: "lg", md: "xl" }}
                   fontWeight="bold"
                 >
-                  {product.title}
+                  {fleets.fleet_name}
                 </chakra.h3>
                 <chakra.h3
                   fontSize={{ base: "lg", md: "xl" }}
                   fontWeight="bold"
                 >
-                  {product.price}
+                  {"IDR " + fleets.fleet_price_day}
                 </chakra.h3>
               </Flex>
-              <Box>
+              {/* <Box>
                 <Text fontSize="lg" fontWeight="500">
-                  {product.location}
+                  {fleets.location}
                 </Text>
-              </Box>
-              <Flex alignItems="center" color="gray.500">
-                {product.detail.map((data, index) => (
+              </Box> */}
+              <Flex noOfLines={3} alignItems="center" color="gray.500">
+                {/* {fleets.detail.map((data, index) => (
                   <Fragment key={index}>
                     <Text fontSize={{ base: "sm", sm: "md" }}>{data}</Text>
-                    {product.detail.length - 1 != index && (
+                    {fleets.detail.length - 1 != index && (
                       <chakra.span mx={2} fontSize={{ base: "sm", sm: "md" }}>
                         |
                       </chakra.span>
                     )}
                   </Fragment>
-                ))}
+                ))} */}
+                {fleets.fleet_desc}
               </Flex>
               <Stack
                 direction={{ base: "column-reverse", sm: "row" }}
                 justifyContent="space-between"
                 alignItems={{ base: "flex-start", sm: "center" }}
               >
-                <Text fontSize="sm" mt={{ base: 1, sm: 0 }}>
-                  Updated {product.updated_at}
+                <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
+                  Capacity : {fleets.fleet_capacity} 
                 </Text>
-                <Stack direction="row" spacing={1} mb="0 !important">
+                <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
+                  Luggage : {fleets.fleet_luggage} 
+                </Text>
+                <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
+                  Year : {fleets.fleet_year}
+                </Text>
+                {/* <Stack direction="row" spacing={1} mb="0 !important">
                   <IconButton>
                     <Icon as={AiOutlineHeart} w={4} h={4} />
                   </IconButton>
@@ -173,7 +201,7 @@ export default function Fleet() {
                     <Icon as={BsTelephoneX} w={4} h={4} />
                     <Text fontSize="sm">Show Phone no.</Text>
                   </IconButton>
-                </Stack>
+                </Stack> */}
               </Stack>
             </Stack>
           </Stack>

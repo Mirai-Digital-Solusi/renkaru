@@ -16,6 +16,8 @@ import {
 } from "@chakra-ui/react";
 
 import { FaQuoteRight } from "react-icons/fa";
+import React, { useMemo, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 const testimonials = [
   {
@@ -51,6 +53,24 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataTestimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    getTestimonials();
+
+  }, []);
+
+  async function getTestimonials() {
+    const { data } = await supabase.from("testimonials").select().range(0, 3);
+    console.log("data services", data);
+    setTestimonials(data);
+  }
+
   const backgroundServices = useColorModeValue("gray.100", "gray.700");
 
   return (
@@ -76,7 +96,7 @@ export default function Testimonials() {
         spacing={10}
         mb={4}
       >
-        {testimonials.map((testimonial, index) => (
+        {dataTestimonials.map((testimonial, index) => (
           <VStack
             spacing={3}
             p={{ base: 4, sm: 8 }}
@@ -91,16 +111,16 @@ export default function Testimonials() {
           >
             <Icon as={FaQuoteRight} w={8} h={8} color="green.400" />
             <Text p={5} color="gray.500">
-              {testimonial.content}
+              {testimonial.testimonial_review}
             </Text>
             <VStack alignItems="center">
-              <Avatar name="avatar" src={testimonial.image} size="lg" />
+              <Avatar name="avatar" src={"https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +testimonial.image_url} size="lg" />
               <Box textAlign="center">
                 <Text fontWeight="bold" fontSize="lg">
-                  {testimonial.username}
+                  {testimonial.testimonial_name}
                 </Text>
                 <Text fontSize="md" color="gray.500">
-                  {testimonial.position} at {testimonial.company}
+                  {testimonial.testimonial_background}
                 </Text>
               </Box>
             </VStack>

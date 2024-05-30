@@ -9,8 +9,14 @@ import {
   Flex,
   Link,
   Tag,
+  Image,
+  Wrap,
+  WrapItem,
+  Avatar,
   useColorModeValue,
 } from "@chakra-ui/react";
+import React, { useMemo, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 const features = [
   {
@@ -81,7 +87,25 @@ const features = [
   },
 ];
 
-export default function Features() {
+export default function Features(props) {
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataServices, setServices] = useState([]);
+
+  useEffect(() => {
+    getServices();
+    console.log("data services", dataServices);
+  }, []);
+
+  async function getServices() {
+    const { data } = await supabase.from("services").select();
+    console.log("data services", data);
+    setServices(data);
+  }
+
   const backgroundServices = useColorModeValue("gray.100", "gray.700");
 
   return (
@@ -98,7 +122,7 @@ export default function Features() {
         </Tag>
       </Center>
 
-      <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
+      <chakra.h3 fontSize="4xl" fontWeight="bold" mb={10} textAlign="center">
         We Have Everything You Need
       </chakra.h3>
       <SimpleGrid
@@ -107,9 +131,9 @@ export default function Features() {
         spacing={10}
         mb={4}
       >
-        {features.map((feature, index) => (
+        {dataServices.map((feature, indexServices) => (
           <Box
-            key={index}
+            key={indexServices}
             bg={backgroundServices}
             p={6}
             rounded="lg"
@@ -117,25 +141,30 @@ export default function Features() {
             pos="relative"
           >
             <Flex
-              p={2}
               w="max-content"
               color="white"
-              bgGradient="linear(to-br, #228be6, #15aabf)"
               rounded="md"
               marginInline="auto"
-              pos="absolute"
               left={0}
               right={0}
               top="-1.5rem"
               boxShadow="lg"
             >
-              {feature.icon}
+              <Image
+                boxSize="100px"
+                objectFit="cover"
+                src={
+                  "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
+                  feature.image_url
+                }
+                alt="Dan Abramov"
+              />
             </Flex>
             <chakra.h3 fontWeight="semibold" fontSize="2xl" mt={6}>
-              {feature.heading}
+              {feature.name}
             </chakra.h3>
             <Text fontSize="md" mt={4}>
-              {feature.content}
+              {feature.description}
             </Text>
           </Box>
         ))}
