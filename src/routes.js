@@ -9,6 +9,7 @@ import {
   MdBusiness,
   MdQuestionAnswer,
   MdDesignServices,
+  MdBookOnline,
 } from "react-icons/md";
 
 // Admin Imports
@@ -63,7 +64,7 @@ const routes = [
   {
     name: "Rentals Order",
     layout: "/admin",
-    icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdBookOnline} width="20px" height="20px" color="inherit" />,
     path: "/rental-order",
     component: RentalOrderTables,
     AuthRequired: true,

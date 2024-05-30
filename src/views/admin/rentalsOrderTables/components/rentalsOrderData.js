@@ -89,7 +89,7 @@ export default function RentalOrderData(props) {
   const [inputClientRentedCar, setClientRentedCar] = useState();
   const [inputClientDateRentFrom, setClientDateRentFrom] = useState(DateFrom);
   const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
-  const [inputClientHoursRented, setClientHoursRented] = useState();
+  const [inputClientHoursRented, setClientHoursRented] = useState(0);
   const [inputClientRentStatus, setClientRentStatus] = useState();
   const [inputImage, setImage] = useState(null);
   const [alert, setAlert] = useState(false);
@@ -249,6 +249,19 @@ export default function RentalOrderData(props) {
     setRentalOrders(data);
   }
 
+  function getHours(dateFrom, dateTo) {
+    let dataHours =  Math.abs(dateTo - dateFrom) / 36e5;
+    let dtf = new Date(dateFrom).getTime()/1000;
+    let dtt = new Date(dateTo).getTime()/1000;
+    console.log("hours", dtf);
+    console.log("hours", dtt);
+    console.log("hours", dateFrom);
+    console.log("hours", dateTo);
+    console.log("hours", (dtt - dtf)/3600);
+    setClientHoursRented(Math.round((dtt - dtf)/3600));
+    return dataHours
+  }
+
   function setRowUpdate(data) {
     console.log(data.row);
     setSelectedRow(data);
@@ -391,7 +404,7 @@ export default function RentalOrderData(props) {
                   mr={10}
                   type="datetime-local"
                   value={inputClientDateRentFrom}
-                  onChange={(e) => setClientDateRentFrom(e.target.value)}
+                  onChange={(e) => {setClientDateRentFrom(e.target.value); getHours(e.target.value, inputClientDateRentTo);}}
                   
                 />
               </Box>
@@ -408,7 +421,7 @@ export default function RentalOrderData(props) {
                   mr={4}
                   type="datetime-local"
                   value={inputClientDateRentTo}
-                  onChange={(e) => setClientDateRentTo(e.target.value)}
+                  onChange={(e) => {setClientDateRentTo(e.target.value); getHours(inputClientDateRentFrom, e.target.value);}}
                 />
               </Box>
             </HStack>
