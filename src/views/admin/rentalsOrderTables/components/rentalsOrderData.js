@@ -65,7 +65,6 @@ import {
 } from "react-icons/md";
 
 export default function RentalOrderData(props) {
-
   let DateFrom = UtilService.dateFrom;
   let DateTo = UtilService.dateTo;
 
@@ -120,9 +119,9 @@ export default function RentalOrderData(props) {
   } = useDisclosure();
 
   const insertRentalOrders = async () => {
-    var dtf = inputClientDateRentFrom.replace('T', ' ')
-    var dtt = inputClientDateRentTo.replace('T', ' ')
-    let fleetId = fleets.find(o => o.fleet_name === inputClientRentedCar);
+    var dtf = inputClientDateRentFrom.replace("T", " ");
+    var dtt = inputClientDateRentTo.replace("T", " ");
+    let fleetId = fleets.find((o) => o.fleet_name === inputClientRentedCar);
 
     console.log("date from", fleetId.id);
     try {
@@ -154,9 +153,9 @@ export default function RentalOrderData(props) {
   };
 
   const updateRentalOrders = async (dataRentalOrders) => {
-    var dtf = inputClientDateRentFrom.replace('T', ' ')
-    var dtt = inputClientDateRentTo.replace('T', ' ')
-    let fleetId = fleets.find(o => o.fleet_name === inputClientRentedCar);
+    var dtf = inputClientDateRentFrom.replace("T", " ");
+    var dtt = inputClientDateRentTo.replace("T", " ");
+    let fleetId = fleets.find((o) => o.fleet_name === inputClientRentedCar);
 
     try {
       const { data, error } = await supabase
@@ -250,16 +249,11 @@ export default function RentalOrderData(props) {
   }
 
   function getHours(dateFrom, dateTo) {
-    let dataHours =  Math.abs(dateTo - dateFrom) / 36e5;
-    let dtf = new Date(dateFrom).getTime()/1000;
-    let dtt = new Date(dateTo).getTime()/1000;
-    console.log("hours", dtf);
-    console.log("hours", dtt);
-    console.log("hours", dateFrom);
-    console.log("hours", dateTo);
-    console.log("hours", (dtt - dtf)/3600);
-    setClientHoursRented(Math.round((dtt - dtf)/3600));
-    return dataHours
+    let dataHours = Math.abs(dateTo - dateFrom) / 36e5;
+    let dtf = new Date(dateFrom).getTime() / 1000;
+    let dtt = new Date(dateTo).getTime() / 1000;
+    setClientHoursRented(Math.round((dtt - dtf) / 3600));
+    return dataHours;
   }
 
   function setRowUpdate(data) {
@@ -404,8 +398,10 @@ export default function RentalOrderData(props) {
                   mr={10}
                   type="datetime-local"
                   value={inputClientDateRentFrom}
-                  onChange={(e) => {setClientDateRentFrom(e.target.value); getHours(e.target.value, inputClientDateRentTo);}}
-                  
+                  onChange={(e) => {
+                    setClientDateRentFrom(e.target.value);
+                    getHours(e.target.value, inputClientDateRentTo);
+                  }}
                 />
               </Box>
               <Box>
@@ -421,7 +417,10 @@ export default function RentalOrderData(props) {
                   mr={4}
                   type="datetime-local"
                   value={inputClientDateRentTo}
-                  onChange={(e) => {setClientDateRentTo(e.target.value); getHours(inputClientDateRentFrom, e.target.value);}}
+                  onChange={(e) => {
+                    setClientDateRentTo(e.target.value);
+                    getHours(inputClientDateRentFrom, e.target.value);
+                  }}
                 />
               </Box>
             </HStack>
