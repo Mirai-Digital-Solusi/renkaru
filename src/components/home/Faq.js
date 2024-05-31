@@ -33,33 +33,28 @@ import {
 import { GoLocation } from "react-icons/go";
 import { BsPhone } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
-
-const contactOptions = [
-  {
-    id: 1,
-    label: "Our Location",
-    subLabel: "A108 Adam Street, NY 535022, USA",
-    icon: GoLocation,
-  },
-  {
-    id: 2,
-    label: "Phone Number",
-    subLabel: "+1 5589 55488 55",
-    icon: BsPhone,
-  },
-  {
-    id: 3,
-    label: "Email Address",
-    subLabel: "info@example.com",
-  },
-  {
-    id: 4,
-    label: "Working Hours",
-    subLabel: "08:30 - 17:30 WIB",
-  },
-];
+import React, { useMemo, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 export default function Faq() {
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataFaqs, setFaqs] = useState([]);
+
+  useEffect(() => {
+    getFaqs();
+    console.log("data services", dataFaqs);
+  }, []);
+
+  async function getFaqs() {
+    const { data } = await supabase.from("faqs").select();
+    console.log("data services", data);
+    setFaqs(data);
+  }
+
   return (
     <Container maxW="7xl" py={10} px={{ base: 5, md: 8 }}>
       <Center h={{ base: 20, md: 50 }}>
@@ -111,39 +106,21 @@ export default function Faq() {
         </Box>
         <Box>
           <Accordion>
+            { dataFaqs.map((faq, index) => (
             <AccordionItem>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
-                    Section 1 title
+                    {faq.faq_question}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+              {faq.faq_answer}
               </AccordionPanel>
             </AccordionItem>
-
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left">
-                    Section 2 title
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </AccordionPanel>
-            </AccordionItem>
+            ))}
           </Accordion>
         </Box>
       </Stack>

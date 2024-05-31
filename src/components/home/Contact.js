@@ -27,6 +27,8 @@ import {
 import { GoLocation } from 'react-icons/go';
 import { BsPhone } from 'react-icons/bs';
 import { HiOutlineMail } from 'react-icons/hi';
+import React, { useMemo, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 const contactOptions = [
   {
@@ -54,6 +56,27 @@ const contactOptions = [
 ];
 
 export default function Contact() {
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataContacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    getContacts();
+    console.log("data services", dataContacts);
+  }, []);
+
+  async function getContacts() {
+    const { data } = await supabase.from("ourContacts").select().range(0,1);
+    console.log("data services", data);
+    const transposedData = Object.keys(data[0]).map(key => {
+      return { label: key.replace(/_/g, " ").split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '), value: data[0][key]};
+    })
+    setContacts(transposedData.slice(3,7));
+  }
+
   return (
     <Container maxW="7xl" py={10} px={{ base: 5, md: 8 }}>
          <Center h={{ base: 20, md: 50 }}>
@@ -78,26 +101,13 @@ export default function Contact() {
       <chakra.h3 fontSize="3xl" fontWeight="bold" textAlign="center">
       Find Us
       </chakra.h3>
-          {contactOptions.map((data) => (
+          {dataContacts.map((data) => (
             <Box key={data.id}>
               <HStack spacing={2}>
-                <Flex
-                  fontWeight="bold"
-                  boxShadow="md"
-                  color="white"
-                  bg="blue.400"
-                  rounded="full"
-                  justifyContent="center"
-                  alignItems="center"
-                  w={10}
-                  h={10}
-                >
-                  {data.id}
-                </Flex>
                 <Text fontSize="xl">{data.label}</Text>
               </HStack>
-              <Text fontSize="md" color="gray.500" ml={12}>
-                {data.subLabel}
+              <Text fontSize="md" color="gray.500">
+                {data.value}
               </Text>
             </Box>
           ))}
