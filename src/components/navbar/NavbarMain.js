@@ -27,25 +27,25 @@ import { IconType } from "react-icons";
 
 const navLinks = [
   { name: "Home", path: "#" },
-  { name: "Services", path: "#" },
-  { name: "Fleet", path: "#" },
+  { name: "Services", path: "#/main/services" },
+  { name: "Fleet", path: "#/main/fleets" },
 ];
 
 const dropdownLinks = [
   {
     name: "Terms",
-    path: "#",
-    icon: MdTimeline,
+    path: "#/main/terms",
+    icon: BsBook,
   },
   {
     name: "Faq",
-    path: "#",
+    path: "#/main/faqs",
     icon: AiTwotoneThunderbolt,
   },
   {
     name: "About Us",
-    path: "#",
-    icon: BsBook,
+    path: "#/main/about-us",
+    icon: MdTimeline,
   },
 ];
 

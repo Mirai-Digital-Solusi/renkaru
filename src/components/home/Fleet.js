@@ -209,7 +209,7 @@ export default function Fleet() {
       </SimpleGrid>
 
       <Center h={{ base: 20, md: 50 }}>
-        <Link href="#" mt={20} fontSize="sm" color="blue.400">
+        <Link href="#/main/fleets" mt={20} fontSize="sm" color="blue.400">
           <Tag
             size={"lg"}
             variant="solid"

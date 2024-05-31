@@ -23,12 +23,18 @@ import ContactData from "views/admin/contactData";
 
 // Public Imports
 import HomePublic from "views/main/home";
+import ServicePublic from "views/main/services";
+import FleetPublic from "views/main/fleets";
+import FaqPublic from "views/main/faqs";
+import AboutUsPublic from "views/main/aboutUs";
+import TermPublic from "views/main/terms";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 
 
 const routes = [
+  // Routes For Main Section
   {
     name: "Home",
     layout: "/main",
@@ -38,6 +44,57 @@ const routes = [
     AuthRequired: false,
   },
   {
+    name: "Services",
+    layout: "/main",
+    path: "/services",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: ServicePublic,
+    AuthRequired: false,
+  },
+  {
+    name: "Fleets",
+    layout: "/main",
+    path: "/fleets",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: FleetPublic,
+    AuthRequired: false,
+  },
+  {
+    name: "Fleets",
+    layout: "/main",
+    path: "/fleets",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: FleetPublic,
+    AuthRequired: false,
+  },
+  {
+    name: "Term",
+    layout: "/main",
+    path: "/terms",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: TermPublic,
+    AuthRequired: false,
+  },
+  {
+    name: "Faq",
+    layout: "/main",
+    path: "/faqs",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: FaqPublic,
+    AuthRequired: false,
+  },
+  {
+    name: "AboutUs",
+    layout: "/main",
+    path: "/about-us",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: AboutUsPublic,
+    AuthRequired: false,
+  },
+
+  // Routes For Admin Section
+
+  {
     name: "Dashboard",
     layout: "/admin",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
@@ -45,14 +102,6 @@ const routes = [
     component: MainDashboard,
     AuthRequired: true,
   },
-  // {
-  //   name: "End of Days",
-  //   layout: "/admin",
-  //   icon: <Icon as={MdEventBusy} width="20px" height="20px" color="inherit" />,
-  //   path: "/end-of-day",
-  //   component: EndOfDayTables,
-  //   AuthRequired: false,
-  // },
   {
     name: "Services",
     layout: "/admin",
@@ -101,6 +150,7 @@ const routes = [
     component: ContactData,
     AuthRequired: true,
   },
+  // Routes For Auth Section
   {
     name: "Sign In",
     layout: "/auth",

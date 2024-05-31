@@ -252,6 +252,7 @@ export default function Heroes() {
                 rounded="md"
                 boxShadow="md"
                 as={Link}
+                href="#/main/fleets"
                 zIndex={55555555}
               >
                 Our Fleet
