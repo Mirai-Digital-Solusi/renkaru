@@ -85,8 +85,6 @@ export default function Heroes() {
   const [data, setRentalOrders] = useState([]);
   const [urlExcel, setUrlExcel] = useState("");
 
-
-
   const {
     isOpen: isOpenCreate,
     onOpen: onOpenCreate,
@@ -97,6 +95,25 @@ export default function Heroes() {
   const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
   const [inputClientCapacity, setClientCapacity] = useState(0);
   const [inputClientRentType, setClientRentType] = useState();
+
+  const searchAvailability = async (dataSearch) => {
+    var dtf = inputClientDateRentFrom.replace("T", " ");
+    var dtt = inputClientDateRentTo.replace("T", " ");
+
+    console.log("data from", dtf)
+    try {
+      const { data, error } = await supabase
+        .from("rentalOrders")
+        .select()
+        .gte('client_date_rent_from', dtf)
+        .lte('client_date_rent_to', dtt)
+      
+        console.log("the result", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
 
   const rentType = [
     {
@@ -270,7 +287,6 @@ export default function Heroes() {
                   value={inputClientDateRentFrom}
                   onChange={(e) => {
                     setClientDateRentFrom(e.target.value);
-                    getHours(e.target.value, inputClientDateRentTo);
                   }}
                 />
               </Box>
@@ -289,7 +305,6 @@ export default function Heroes() {
                   value={inputClientDateRentTo}
                   onChange={(e) => {
                     setClientDateRentTo(e.target.value);
-                    getHours(inputClientDateRentFrom, e.target.value);
                   }}
                 />
               </Box>
@@ -334,7 +349,7 @@ export default function Heroes() {
             <Button mr={3} onClick={onCloseCreate}>
               Cancel
             </Button>
-            <Button colorScheme="facebook" onClick={() => searchFleets()}>
+            <Button colorScheme="facebook" onClick={() => searchAvailability()}>
               Search
             </Button>
           </ModalFooter>
@@ -426,7 +441,9 @@ export default function Heroes() {
                   bgGradient: "linear(to-l, #0ea5e9,#2563eb)",
                   opacity: 0.9,
                 }}
-                onClick={() => {onOpenCreate();}}
+                onClick={() => {
+                  onOpenCreate();
+                }}
               >
                 <chakra.span>Check Availability</chakra.span>
                 <Icon as={MdBolt} h={4} w={4} ml={1} />
