@@ -65,6 +65,7 @@ export default function FleetData(props) {
   const [inputFleetHour, setFleetHour] = useState();
   const [inputFleetPriceDay, setFleetPriceDay] = useState();
   const [inputFleetDay, setFleetDay] = useState();
+  const [inputFleetTotal, setFleetTotal] = useState();
   const [inputImage, setImage] = useState(null);
   const [alert, setAlert] = useState(false);
   const [selectedRow, setSelectedRow] = useState();
@@ -114,6 +115,7 @@ export default function FleetData(props) {
             fleet_hour: inputFleetHour,
             fleet_price_day: inputFleetPriceDay,
             fleet_day: inputFleetDay,
+            fleet_total_number: inputFleetTotal,
             image_url: inputImage,
           },
         ])
@@ -143,6 +145,7 @@ export default function FleetData(props) {
           fleet_hour: inputFleetHour,
           fleet_price_day: inputFleetPriceDay,
           fleet_day: inputFleetDay,
+          fleet_total_number: inputFleetTotal,
           image_url: inputImage,
         })
         .eq("id", dataFleets.row.allCells[0].value)
@@ -241,7 +244,8 @@ export default function FleetData(props) {
     setFleetHour(data.row.allCells[7].value);
     setFleetPriceDay(data.row.allCells[8].value);
     setFleetDay(data.row.allCells[9].value);
-    setImage(data.row.allCells[10].value);
+    setFleetTotal(data.row.allCells[10].value)
+    setImage(data.row.allCells[11].value);
     onOpenUpdate(true);
   }
 
@@ -397,6 +401,17 @@ export default function FleetData(props) {
                 />
               </Box>
             </HStack>
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Fleet Total
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Total Number of Fleet"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputFleetTotal}
+                  onChange={(e) => setFleetTotal(e.target.value)}
+                />
             <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Description
             </Text>
@@ -567,6 +582,17 @@ export default function FleetData(props) {
               </Box>
             </HStack>
             <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+                  Fleet Total
+                </Text>
+                <Input
+                  focusBorderColor="black"
+                  placeholder="Input Total Number of Fleet"
+                  borderRadius="10px"
+                  mb={3}
+                  value={inputFleetTotal}
+                  onChange={(e) => setFleetTotal(e.target.value)}
+                />
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
               Description
             </Text>
             <Textarea
@@ -685,6 +711,7 @@ export default function FleetData(props) {
             setFleetHour(null);
             setFleetPriceDay(null);
             setFleetDay(null);
+            setFleetTotal(null);
             setImage(null);
             onOpenCreate();
           }}
@@ -781,6 +808,12 @@ export default function FleetData(props) {
                       </Text>
                     );
                   } else if (cell.column.Header === "DAY") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "FLEET TOTAL") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}

@@ -40,6 +40,10 @@ export const columnsFleetsData = [
     accessor: "fleet_day",
   },
   {
+    Header: "FLEET TOTAL",
+    accessor: "fleet_total_number",
+  },
+  {
     Header: "IMAGE URL",
     accessor: "image_url",
   },
