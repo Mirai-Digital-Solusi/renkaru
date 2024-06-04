@@ -90,6 +90,7 @@ export default function RentalOrderData(props) {
   const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
   const [inputClientHoursRented, setClientHoursRented] = useState(0);
   const [inputClientRentStatus, setClientRentStatus] = useState();
+  const [inputClientRentType, setClientRentType] = useState();
   const [inputImage, setImage] = useState(null);
   const [alert, setAlert] = useState(false);
   const [selectedRow, setSelectedRow] = useState();
@@ -137,6 +138,7 @@ export default function RentalOrderData(props) {
             client_date_rent_to: dtt,
             client_hours_rented: inputClientHoursRented,
             client_rent_status: inputClientRentStatus,
+            client_rent_type: inputClientRentType,
             image_url: inputImage,
           },
         ])
@@ -169,6 +171,7 @@ export default function RentalOrderData(props) {
           client_date_rent_to: dtt,
           client_hours_rented: inputClientHoursRented,
           client_rent_status: inputClientRentStatus,
+          client_rent_type: inputClientRentType,
           image_url: inputImage,
         })
         .eq("id", dataRentalOrders.row.allCells[0].value)
@@ -267,7 +270,8 @@ export default function RentalOrderData(props) {
     setClientDateRentTo(data.row.cells[5].value);
     setClientHoursRented(data.row.cells[6].value);
     setClientRentStatus(data.row.cells[7].value);
-    setImage(data.row.cells[8].value);
+    setClientRentType(data.row.cells[8].value);
+    setImage(data.row.cells[9].value);
     onOpenUpdate(true);
   }
 
@@ -296,6 +300,15 @@ export default function RentalOrderData(props) {
     },
     {
       option: "Cancelled",
+    },
+  ];
+
+  const rentType = [
+    {
+      option: "Private Rentals",
+    },
+    {
+      option: "Corporate Rentals",
     },
   ];
 
@@ -350,20 +363,36 @@ export default function RentalOrderData(props) {
               value={inputClientName}
               onChange={(e) => setClientName(e.target.value)}
             />
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Personal ID
+            </Text>
+            <Input
+              focusBorderColor="black"
+              placeholder="Input Personal ID"
+              borderRadius="10px"
+              mb={3}
+              mr={5}
+              value={inputClientPersonalID}
+              onChange={(e) => setClientPersonalID(e.target.value)}
+            />
             <HStack spacing="20px">
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Personal ID
+                  Rent Type
                 </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Personal ID"
-                  borderRadius="10px"
+                <Select
                   mb={3}
-                  mr={5}
-                  value={inputClientPersonalID}
-                  onChange={(e) => setClientPersonalID(e.target.value)}
-                />
+                  mr={105}
+                  w={"100%"}
+                  borderRadius="10px"
+                  placeholder="Select Rent Type"
+                  value={inputClientRentType}
+                  onChange={(e) => setClientRentType(e.target.value)}
+                >
+                  {rentType.map((rentTypes, index) => (
+                    <option value={rentTypes.option}>{rentTypes.option}</option>
+                  ))}
+                </Select>
               </Box>
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
@@ -371,6 +400,7 @@ export default function RentalOrderData(props) {
                 </Text>
                 <Select
                   mr={20}
+                  ml={2}
                   w={"100%"}
                   borderRadius="10px"
                   mb={3}
@@ -519,20 +549,36 @@ export default function RentalOrderData(props) {
               value={inputClientName}
               onChange={(e) => setClientName(e.target.value)}
             />
-            <HStack spacing="24px">
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Personal ID
+            </Text>
+            <Input
+              focusBorderColor="black"
+              placeholder="Input Personal ID"
+              borderRadius="10px"
+              mb={3}
+              mr={5}
+              value={inputClientPersonalID}
+              onChange={(e) => setClientPersonalID(e.target.value)}
+            />
+            <HStack spacing="20px">
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Personal ID
+                  Rent Type
                 </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Personal ID"
-                  borderRadius="10px"
+                <Select
                   mb={3}
-                  mr={5}
-                  value={inputClientPersonalID}
-                  onChange={(e) => setClientPersonalID(e.target.value)}
-                />
+                  mr={105}
+                  w={"100%"}
+                  borderRadius="10px"
+                  placeholder="Select Rent Type"
+                  value={inputClientRentType}
+                  onChange={(e) => setClientRentType(e.target.value)}
+                >
+                  {rentType.map((rentTypes, index) => (
+                    <option value={rentTypes.option}>{rentTypes.option}</option>
+                  ))}
+                </Select>
               </Box>
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
@@ -540,6 +586,7 @@ export default function RentalOrderData(props) {
                 </Text>
                 <Select
                   mr={20}
+                  ml={2}
                   w={"100%"}
                   borderRadius="10px"
                   mb={3}
@@ -566,8 +613,11 @@ export default function RentalOrderData(props) {
                   mb={3}
                   mr={10}
                   type="datetime-local"
-                  value={inputClientDateRentTo}
-                  onChange={(e) => setClientDateRentTo(e.target.value)}
+                  value={inputClientDateRentFrom}
+                  onChange={(e) => {
+                    setClientDateRentFrom(e.target.value);
+                    getHours(e.target.value, inputClientDateRentTo);
+                  }}
                 />
               </Box>
               <Box>
@@ -583,7 +633,10 @@ export default function RentalOrderData(props) {
                   mr={4}
                   type="datetime-local"
                   value={inputClientDateRentTo}
-                  onChange={(e) => setClientDateRentTo(e.target.value)}
+                  onChange={(e) => {
+                    setClientDateRentTo(e.target.value);
+                    getHours(inputClientDateRentFrom, e.target.value);
+                  }}
                 />
               </Box>
             </HStack>
@@ -724,10 +777,9 @@ export default function RentalOrderData(props) {
             setClientPersonalID(null);
             setClientRentedCarID(null);
             setClientRentedCar(null);
-            // setClientDateRentFrom(null);
-            // setClientDateRentTo(null);
             setClientHoursRented(null);
             setClientRentStatus(null);
+            setClientRentType(null);
             setImage(null);
             onOpenCreate();
           }}
@@ -816,6 +868,12 @@ export default function RentalOrderData(props) {
                       </Text>
                     );
                   } else if (cell.column.Header === "RENT STATUS") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "RENT TYPE") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}

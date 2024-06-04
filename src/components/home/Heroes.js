@@ -97,9 +97,6 @@ export default function Heroes() {
   const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
   const [inputClientCapacity, setClientCapacity] = useState(0);
   const [inputClientRentType, setClientRentType] = useState();
-  const [inputImage, setImage] = useState(null);
-
-  const fleets = JSON.parse(localStorage.getItem("optionFleets"));
 
   const rentType = [
     {
@@ -325,27 +322,19 @@ export default function Heroes() {
                   value={inputClientRentType}
                   onChange={(e) => setClientRentType(e.target.value)}
                 >
-                  {rentType.map((rentTypees, index) => (
-                    <option value={rentTypees.option}>{rentTypees.option}</option>
+                  {rentType.map((rentTypes, index) => (
+                    <option value={rentTypes.option}>{rentTypes.option}</option>
                   ))}
                 </Select>
               </Box>
             </HStack>
-            <Image
-              url={inputImage}
-              previousImage={inputImage}
-              size={150}
-              onUpload={(event, url) => {
-                setImage(url);
-              }}
-            />
           </ModalBody>
 
           <ModalFooter>
             <Button mr={3} onClick={onCloseCreate}>
               Cancel
             </Button>
-            <Button colorScheme="facebook" onClick={() => insertFleets()}>
+            <Button colorScheme="facebook" onClick={() => searchFleets()}>
               Search
             </Button>
           </ModalFooter>

@@ -36,6 +36,10 @@ export const columnsRentalsOrderData = [
     accessor: "client_rent_status",
   },
   {
+    Header: "RENT TYPE",
+    accessor: "client_rent_type",
+  },
+  {
     Header: "IMAGE URL",
     accessor: "image_url",
   },
