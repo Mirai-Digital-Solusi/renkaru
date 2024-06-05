@@ -100,20 +100,36 @@ export default function Heroes() {
     var dtf = inputClientDateRentFrom.replace("T", " ");
     var dtt = inputClientDateRentTo.replace("T", " ");
 
-    console.log("data from", dtf)
+    console.log("data from", dtf);
     try {
       const { data, error } = await supabase
         .from("rentalOrders")
         .select()
-        .gte('client_date_rent_from', dtf)
-        .lte('client_date_rent_to', dtt)
-      
-        console.log("the result", data);
+        .gte("client_date_rent_from", dtf)
+        .lte("client_date_rent_to", dtt);
+
+      const { data: dataFleets, error: checkError } = await supabase
+        .from("fleets")
+        .select("*")
+        .eq("fleet_capacity", inputClientCapacity);
+
+      dataFleets.map(function (fleets) {
+        let fleetId = data.filter((o) => o.client_rented_car === fleets.fleet_name).length;
+        if(fleets.fleet_total_number - fleetId === 0) {
+          console.log(fleets.fleet_name + ' tidak tersedia');
+        } else {
+          console.log("data flee id", fleets.fleet_total_number - fleetId);
+          let availableFleet = fleets.fleet_total_number - (isNaN(fleetId)? 0 :fleetId)
+          console.log(fleets.fleet_name + " tersedia sejumlah " +  availableFleet);
+        }
+      });
+      if (checkError) {
+        throw checkError;
+      }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
 
   const rentType = [
     {
