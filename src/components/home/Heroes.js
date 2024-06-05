@@ -105,6 +105,7 @@ export default function Heroes() {
       const { data, error } = await supabase
         .from("rentalOrders")
         .select()
+        .in('client_rent_status', ['Booked', 'On Review Payment', 'Ongoing'])
         .gte("client_date_rent_from", dtf)
         .lte("client_date_rent_to", dtt);
 
@@ -117,12 +118,16 @@ export default function Heroes() {
         let fleetId = data.filter((o) => o.client_rented_car === fleets.fleet_name).length;
         if(fleets.fleet_total_number - fleetId === 0) {
           console.log(fleets.fleet_name + ' tidak tersedia');
+          let dataForRemove = dataFleets.findIndex(obj => obj.id === fleets.id)
+          dataFleets.splice(dataForRemove, 1);
         } else {
           console.log("data flee id", fleets.fleet_total_number - fleetId);
           let availableFleet = fleets.fleet_total_number - (isNaN(fleetId)? 0 :fleetId)
           console.log(fleets.fleet_name + " tersedia sejumlah " +  availableFleet);
         }
       });
+
+      console.log("SETELAH FILTER", dataFleets)
       if (checkError) {
         throw checkError;
       }

@@ -17,66 +17,81 @@ import {
   TagRightIcon,
   Link,
   SimpleGrid,
+  Button,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import { AiOutlineHeart, AiOutlineExclamationCircle } from "react-icons/ai";
 import { BsTelephoneX, BsArrowUpRightCircle } from "react-icons/bs";
 import React, { useMemo, useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-
-// interface ProductCardProps {
-//   id: number;
-//   title: string;
-//   detail: string[];
-//   location: string;
-//   updated_at: string;
-//   price: string;
-//   image: string;
-//   isFeatured?: boolean;
-// }
-
-const fleetssList = [
-  {
-    id: 1,
-    title: "Ford F-150 SUV 2021",
-    location: "Paris",
-    detail: ["2021", "Petrol", "4500 cc", "Automatic"],
-    updated_at: "17 days ago",
-    price: "$ 400k",
-    isFeatured: true,
-    image:
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
-  },
-  {
-    id: 2,
-    title: "Haval Jolion Top",
-    location: "New York",
-    detail: ["2021", "Petrol", "3500 cc", "Automatic"],
-    updated_at: "1 days ago",
-    price: "$ 450k",
-    image:
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
-  },
-];
+import HeaderFleet from "components/headerHome/Fleets/headerFleet";
+import UtilService from "services/util.service.js";
 
 export default function Fleet() {
-
   const supabase = createClient(
     process.env.REACT_APP_API_KEY,
     process.env.REACT_APP_ANON_KEY
   );
 
+  let DateFrom = UtilService.dateFrom;
+  let DateTo = UtilService.dateTo;
+
   const [dataFleets, setFleets] = useState([]);
+  const [inputClientDateRentFrom, setClientDateRentFrom] = useState(DateFrom);
+  const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
+  const [inputClientCapacity, setClientCapacity] = useState(0);
 
   useEffect(() => {
     getFleets();
-
   }, []);
 
   async function getFleets() {
-    const { data } = await supabase.from("fleets").select().range(0, 4);
-    console.log("data services", data);
-    setFleets(data);
+    var dtf = inputClientDateRentFrom.replace("T", " ");
+    var dtt = inputClientDateRentTo.replace("T", " ");
+
+    if (inputClientCapacity === 0) {
+      const { data } = await supabase.from("fleets").select().range(0, 4);
+      console.log("data services", data);
+      setFleets(data);
+    } else {
+      const { data, error } = await supabase
+        .from("rentalOrders")
+        .select()
+        .in("client_rent_status", ["Booked", "On Review Payment", "Ongoing"])
+        .gte("client_date_rent_from", dtf)
+        .lte("client_date_rent_to", dtt);
+
+      const { data: dataFleets, error: checkError } = await supabase
+        .from("fleets")
+        .select("*")
+        .eq("fleet_capacity", inputClientCapacity);
+
+      dataFleets.map(function (fleets) {
+        let fleetId = data.filter(
+          (o) => o.client_rented_car === fleets.fleet_name
+        ).length;
+        if (fleets.fleet_total_number - fleetId === 0) {
+          console.log(fleets.fleet_name + " tidak tersedia");
+          let dataForRemove = dataFleets.findIndex(
+            (obj) => obj.id === fleets.id
+          );
+          dataFleets.splice(dataForRemove, 1);
+        } else {
+          console.log("data flee id", fleets.fleet_total_number - fleetId);
+          let availableFleet =
+            fleets.fleet_total_number - (isNaN(fleetId) ? 0 : fleetId);
+          console.log(
+            fleets.fleet_name + " tersedia sejumlah " + availableFleet
+          );
+        }
+      });
+
+      console.log("SETELAH FILTER", dataFleets);
+      setFleets(dataFleets);
+      if (checkError) {
+        throw checkError;
+      }
+    }
   }
 
   return (
@@ -96,6 +111,17 @@ export default function Fleet() {
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
         Explore Our Car Lineup
       </chakra.h3>
+
+      <HeaderFleet
+        inputClientDateRentFrom={inputClientDateRentFrom}
+        inputClientDateRentTo={inputClientDateRentTo}
+        inputClientCapacity={inputClientCapacity}
+        setClientDateRentFrom={setClientDateRentFrom}
+        setClientDateRentTo={setClientDateRentTo}
+        setClientCapacity={setClientCapacity}
+        getFleets={getFleets}
+      />
+
       <SimpleGrid
         columns={{ base: 1, sm: 1, md: 2 }}
         placeItems="center"
@@ -137,7 +163,10 @@ export default function Fleet() {
                 w={{ base: "100%", md: "18rem" }}
                 h="auto"
                 objectFit="cover"
-                src={"https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" + fleets.image_url}
+                src={
+                  "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
+                  fleets.image_url
+                }
                 alt="fleets image"
               />
             </Flex>
@@ -185,10 +214,10 @@ export default function Fleet() {
                 alignItems={{ base: "flex-start", sm: "center" }}
               >
                 <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
-                  Capacity : {fleets.fleet_capacity} 
+                  Capacity : {fleets.fleet_capacity}
                 </Text>
                 <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
-                  Luggage : {fleets.fleet_luggage} 
+                  Luggage : {fleets.fleet_luggage}
                 </Text>
                 <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
                   Year : {fleets.fleet_year}
