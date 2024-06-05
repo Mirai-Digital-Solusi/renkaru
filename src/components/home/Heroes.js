@@ -22,7 +22,8 @@
 */
 
 import React, { useMemo, useEffect, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, Link as ReactRouterLink } from "react-router-dom";
+
 // Chakra imports
 import {
   Box,
@@ -105,7 +106,7 @@ export default function Heroes() {
       const { data, error } = await supabase
         .from("rentalOrders")
         .select()
-        .in('client_rent_status', ['Booked', 'On Review Payment', 'Ongoing'])
+        .in("client_rent_status", ["Booked", "On Review Payment", "Ongoing"])
         .gte("client_date_rent_from", dtf)
         .lte("client_date_rent_to", dtt);
 
@@ -115,19 +116,26 @@ export default function Heroes() {
         .eq("fleet_capacity", inputClientCapacity);
 
       dataFleets.map(function (fleets) {
-        let fleetId = data.filter((o) => o.client_rented_car === fleets.fleet_name).length;
-        if(fleets.fleet_total_number - fleetId === 0) {
-          console.log(fleets.fleet_name + ' tidak tersedia');
-          let dataForRemove = dataFleets.findIndex(obj => obj.id === fleets.id)
+        let fleetId = data.filter(
+          (o) => o.client_rented_car === fleets.fleet_name
+        ).length;
+        if (fleets.fleet_total_number - fleetId === 0) {
+          console.log(fleets.fleet_name + " tidak tersedia");
+          let dataForRemove = dataFleets.findIndex(
+            (obj) => obj.id === fleets.id
+          );
           dataFleets.splice(dataForRemove, 1);
         } else {
           console.log("data flee id", fleets.fleet_total_number - fleetId);
-          let availableFleet = fleets.fleet_total_number - (isNaN(fleetId)? 0 :fleetId)
-          console.log(fleets.fleet_name + " tersedia sejumlah " +  availableFleet);
+          let availableFleet =
+            fleets.fleet_total_number - (isNaN(fleetId) ? 0 : fleetId);
+          console.log(
+            fleets.fleet_name + " tersedia sejumlah " + availableFleet
+          );
         }
       });
 
-      console.log("SETELAH FILTER", dataFleets)
+      console.log("SETELAH FILTER", dataFleets);
       if (checkError) {
         throw checkError;
       }
@@ -205,6 +213,17 @@ export default function Heroes() {
   const handleClick = () => setShow(!show);
   const history = useHistory();
 
+  const routeChange = () => {
+    let path = `/main/fleets`;
+    let data = {
+      inputClientDateRentFrom: inputClientDateRentFrom,
+      inputClientDateRentTo: inputClientDateRentTo,
+      inputClientCapacity: inputClientCapacity,
+    };
+    console.log("data yang dipass", data);
+    history.push(path, { state: { data } });
+  };
+
   function validateLogin(email) {
     let error;
     if (!email) {
@@ -247,51 +266,6 @@ export default function Heroes() {
         <ModalContent>
           <ModalHeader>Check Availability</ModalHeader>
           <ModalBody>
-            {/* <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-              Client Name
-            </Text>
-            <Input
-              focusBorderColor="black"
-              placeholder="Input Client Name"
-              borderRadius="10px"
-              mb={3}
-              value={inputClientName}
-              onChange={(e) => setClientName(e.target.value)}
-            /> */}
-            {/* <HStack spacing="20px">
-              <Box>
-                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Personal ID
-                </Text>
-                <Input
-                  focusBorderColor="black"
-                  placeholder="Input Personal ID"
-                  borderRadius="10px"
-                  mb={3}
-                  mr={5}
-                  value={inputClientPersonalID}
-                  onChange={(e) => setClientPersonalID(e.target.value)}
-                />
-              </Box>
-              <Box>
-                <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-                  Rented Car
-                </Text>
-                <Select
-                  mr={20}
-                  w={"100%"}
-                  borderRadius="10px"
-                  mb={3}
-                  placeholder="Select option"
-                  value={inputClientRentedCar}
-                  onChange={(e) => setClientRentedCar(e.target.value)}
-                >
-                  {fleets.map((fleet, index) => (
-                    <option value={fleet.fleet_name}>{fleet.fleet_name}</option>
-                  ))}
-                </Select>
-              </Box>
-            </HStack> */}
             <HStack spacing="24px">
               <Box>
                 <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
@@ -370,9 +344,19 @@ export default function Heroes() {
             <Button mr={3} onClick={onCloseCreate}>
               Cancel
             </Button>
-            <Button colorScheme="facebook" onClick={() => searchAvailability()}>
-              Search
-            </Button>
+            <Link
+              as={ReactRouterLink}
+              to={{
+                pathname: "/main/fleets",
+                state: {
+                  inputClientDateRentFrom: inputClientDateRentFrom,
+                  inputClientDateRentTo: inputClientDateRentTo,
+                  inputClientCapacity: inputClientCapacity,
+                },
+              }}
+            >
+              <Button colorScheme="facebook">Search</Button>
+            </Link>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -488,171 +472,6 @@ export default function Heroes() {
               </Box>
             </HStack>
           </Stack>
-          {/* <Box>
-            <Box me="auto">
-              <Heading color={textColor} fontSize="36px" mb="10px">
-                Reservation
-              </Heading>
-              <Text
-                mb="36px"
-                ms="4px"
-                color={textColorSecondary}
-                fontWeight="400"
-                fontSize="md"
-              >
-                Find Your Perfect Rental Car!
-              </Text>
-            </Box>
-            <Flex
-              zIndex="2"
-              direction="column"
-              w={{ base: "100%", md: "420px" }}
-              maxW="100%"
-              background="transparent"
-              borderRadius="15px"
-              mx={{ base: "auto", lg: "unset" }}
-              me="auto"
-              mb={{ base: "20px", md: "auto" }}
-            >
-              <Formik
-                initialValues={{
-                  email: "mds@miraisolusi.com",
-                  password: "renkaru",
-                }}
-                onSubmit={(values, actions) => {
-                  setTimeout(() => {
-                    console.log(values.email);
-                    AuthService.login(values.email, values.password).then(
-                      () => {
-                        history.push("/admin/profile");
-                      },
-                      (error) => {
-                        const resMessage =
-                          (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                          error.message ||
-                          error.toString();
-                      }
-                    );
-                    actions.setSubmitting(false);
-                  }, 1000);
-                }}
-              >
-                {(props) => (
-                  <Form>
-                    <Field name="dateTo" validate={validateLogin}>
-                      {({ field, form }) => (
-                        <FormControl
-                          isInvalid={form.errors.email && form.touched.email}
-                        >
-                          <FormLabel
-                            htmlFor="text"
-                            display="flex"
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            mb="8px"
-                          >
-                            Rental Type<Text color={brandStars}>*</Text>
-                          </FormLabel>
-                          <FormErrorMessage>
-                            {form.errors.email}
-                          </FormErrorMessage>
-                          <Input
-                            {...field}
-                            variant="auth"
-                            fontSize="sm"
-                            ms={{ base: "0px", md: "0px" }}
-                            mb="24px"
-                            fontWeight="500"
-                            size="lg"
-                          />
-                        </FormControl>
-                      )}
-                    </Field>
-                    <SimpleGrid columns={2} spacing={5}>
-                      <Field name="dateFrom" validate={validateLogin}>
-                        {({ field, form }) => (
-                          <FormControl
-                            isInvalid={form.errors.email && form.touched.email}
-                          >
-                            <FormLabel
-                              htmlFor="text"
-                              display="flex"
-                              ms="4px"
-                              fontSize="sm"
-                              fontWeight="500"
-                              color={textColor}
-                              mb="8px"
-                            >
-                              Date From<Text color={brandStars}>*</Text>
-                            </FormLabel>
-                            <FormErrorMessage>
-                              {form.errors.email}
-                            </FormErrorMessage>
-                            <Input
-                              {...field}
-                              variant="auth"
-                              fontSize="sm"
-                              ms={{ base: "0px", md: "0px" }}
-                              mb="24px"
-                              fontWeight="500"
-                              size="lg"
-                            />
-                          </FormControl>
-                        )}
-                      </Field>
-                      <Field name="dateTo" validate={validateLogin}>
-                        {({ field, form }) => (
-                          <FormControl
-                            isInvalid={form.errors.email && form.touched.email}
-                          >
-                            <FormLabel
-                              htmlFor="text"
-                              display="flex"
-                              ms="4px"
-                              fontSize="sm"
-                              fontWeight="500"
-                              color={textColor}
-                              mb="8px"
-                            >
-                              Date To<Text color={brandStars}>*</Text>
-                            </FormLabel>
-                            <FormErrorMessage>
-                              {form.errors.email}
-                            </FormErrorMessage>
-                            <Input
-                              {...field}
-                              variant="auth"
-                              fontSize="sm"
-                              ms={{ base: "0px", md: "0px" }}
-                              mb="24px"
-                              fontWeight="500"
-                              size="lg"
-                            />
-                          </FormControl>
-                        )}
-                      </Field>
-                    </SimpleGrid>
-                    <Button
-                      fontSize="sm"
-                      variant="brand"
-                      fontWeight="500"
-                      w="100%"
-                      h="50"
-                      mb="24px"
-                      isLoading={props.isSubmitting}
-                      type="submit"
-                    >
-                      Search!
-                    </Button>
-                  </Form>
-                )}
-              </Formik>
-            </Flex>
-          </Box> */}
         </Stack>
       </Flex>
       <Box

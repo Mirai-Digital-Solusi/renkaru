@@ -20,9 +20,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
-import { AiOutlineHeart, AiOutlineExclamationCircle } from "react-icons/ai";
-import { BsTelephoneX, BsArrowUpRightCircle } from "react-icons/bs";
-import React, { useMemo, useEffect, useState } from "react";
+import { BsArrowUpRightCircle } from "react-icons/bs";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import HeaderFleet from "components/headerHome/Fleets/headerFleet";
 import UtilService from "services/util.service.js";
@@ -40,8 +40,10 @@ export default function Fleet() {
   const [inputClientDateRentFrom, setClientDateRentFrom] = useState(DateFrom);
   const [inputClientDateRentTo, setClientDateRentTo] = useState(DateTo);
   const [inputClientCapacity, setClientCapacity] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
+    console.log("ini state ", location.state);
     getFleets();
   }, []);
 
@@ -85,8 +87,6 @@ export default function Fleet() {
           );
         }
       });
-
-      console.log("SETELAH FILTER", dataFleets);
       setFleets(dataFleets);
       if (checkError) {
         throw checkError;
