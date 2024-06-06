@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import { BsArrowUpRightCircle } from "react-icons/bs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import HeaderFleet from "components/headerHome/Fleets/headerFleet";
@@ -43,17 +43,27 @@ export default function Fleet() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("ini state ", location.state);
+    if (location.state !== void 0) {
+      setClientDateRentFrom(location.state.inputClientDateRentFrom)
+      setClientDateRentTo(location.state.inputClientDateRentTo)
+      setClientCapacity(location.state?.inputClientCapacity)
+    } 
     getFleets();
   }, []);
+
+  useEffect(() => {
+    getFleets();
+  }, [inputClientCapacity]);
+
+  
 
   async function getFleets() {
     var dtf = inputClientDateRentFrom.replace("T", " ");
     var dtt = inputClientDateRentTo.replace("T", " ");
-
-    if (inputClientCapacity === 0) {
+    console.log("data services setelah home", inputClientCapacity);
+    if (inputClientCapacity == 0) {
       const { data } = await supabase.from("fleets").select().range(0, 4);
-      console.log("data services", data);
+      console.log("data services setelah home", data);
       setFleets(data);
     } else {
       const { data, error } = await supabase
