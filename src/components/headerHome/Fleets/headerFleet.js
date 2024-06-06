@@ -6,6 +6,7 @@ import {
   InputLeftAddon,
   SimpleGrid,
   Button,
+  VStack,
 } from "@chakra-ui/react";
 
 import React from "react";
@@ -23,12 +24,12 @@ export default function HeaderFleet(props) {
   } = props;
 
   return (
-    <Flex px="25px" justify="space-between" mb="20px" align="center">
-      <SimpleGrid
-        w="100%"
-        mb="20px"
-        columns={{ sm: 1, md: 2 }}
-        spacing={{ base: "20px", xl: "20px" }}
+    <Flex px="25px" justify={{ base: "center", md: "center", lg: "space-between" }} mb="20px">
+      <VStack
+        spacing={10}
+        alignItems="flex-start"
+        mb={{ base: 5, md: 0 }}
+        maxW="lg"
       >
         <InputGroup>
           <InputLeftAddon children="Date From" />
@@ -53,7 +54,7 @@ export default function HeaderFleet(props) {
           />
         </InputGroup>
         <InputGroup>
-        <InputLeftAddon children="Capacity" />
+          <InputLeftAddon children="Capacity" />
           <Input
             focusBorderColor="black"
             placeholder="Input Passenger Capacity"
@@ -69,10 +70,10 @@ export default function HeaderFleet(props) {
               onChange={(e) => setInputBranch(e.target.value)}
             /> */}
         </InputGroup>
-      </SimpleGrid>
-      <Button colorScheme="facebook" onClick={() => getFleets()}>
-              Search
-            </Button>
+        <Button colorScheme="facebook" width='100%' onClick={() => getFleets()}>
+          Search
+        </Button>
+      </VStack>
     </Flex>
   );
 }

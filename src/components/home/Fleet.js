@@ -44,18 +44,16 @@ export default function Fleet() {
 
   useEffect(() => {
     if (location.state !== void 0) {
-      setClientDateRentFrom(location.state.inputClientDateRentFrom)
-      setClientDateRentTo(location.state.inputClientDateRentTo)
-      setClientCapacity(location.state?.inputClientCapacity)
-    } 
+      setClientDateRentFrom(location.state.inputClientDateRentFrom);
+      setClientDateRentTo(location.state.inputClientDateRentTo);
+      setClientCapacity(location.state?.inputClientCapacity);
+    }
     getFleets();
   }, []);
 
   useEffect(() => {
     getFleets();
   }, [inputClientCapacity]);
-
-  
 
   async function getFleets() {
     var dtf = inputClientDateRentFrom.replace("T", " ");
@@ -105,7 +103,7 @@ export default function Fleet() {
   }
 
   return (
-    <Container maxW="7xl" p={{ base: 5, md: 12 }} margin="0 auto">
+    <Container maxW="6xl" p={{ base: 5, md: 12 }} margin="0 auto">
       <Center h={{ base: 20, md: 50 }}>
         <Tag
           size="lg"
@@ -118,40 +116,41 @@ export default function Fleet() {
         </Tag>
       </Center>
 
-      <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
+      <chakra.h3 fontSize="4xl" fontWeight="bold" textAlign="center">
         Explore Our Car Lineup
       </chakra.h3>
 
-      <HeaderFleet
-        inputClientDateRentFrom={inputClientDateRentFrom}
-        inputClientDateRentTo={inputClientDateRentTo}
-        inputClientCapacity={inputClientCapacity}
-        setClientDateRentFrom={setClientDateRentFrom}
-        setClientDateRentTo={setClientDateRentTo}
-        setClientCapacity={setClientCapacity}
-        getFleets={getFleets}
-      />
-
-      <SimpleGrid
-        columns={{ base: 1, sm: 1, md: 2 }}
-        placeItems="center"
-        spacing={5}
-        mb={4}
+      <Stack  mt={{ base: 10, md: 20 }} direction={{ base: "column", md: "column", lg: "row" }}>
+        <HeaderFleet
+          inputClientDateRentFrom={inputClientDateRentFrom}
+          inputClientDateRentTo={inputClientDateRentTo}
+          inputClientCapacity={inputClientCapacity}
+          setClientDateRentFrom={setClientDateRentFrom}
+          setClientDateRentTo={setClientDateRentTo}
+          setClientCapacity={setClientCapacity}
+          getFleets={getFleets}
+        />
+        <Flex align='justify'>
+        <VStack
+        spacing={10}
+        mb={{ base: 5, md: 0 }}
       >
-        {dataFleets.map((fleets, index) => (
-          <Stack
-            key={index}
-            spacing={{ base: 0, md: 4 }}
-            direction={{ base: "column", md: "row" }}
-            border="0.5px solid"
-            borderColor="gray.400"
-            p={4}
-            rounded="md"
-            w={{ base: "auto", md: "auto" }}
-            overflow="hidden"
-            pos="relative"
-          >
-            {/* {fleets.isFeatured && (
+          {dataFleets.map((fleets, index) => (
+            <Stack
+              key={index}
+              spacing={{ base: 0, md: 4 }}
+              direction={{ base: "column", md: "row" }}
+              border="0.5px solid"
+              borderColor="gray.400"
+              p={4}
+              rounded="md"
+              h={{ base: "auto", md: "10em" }}
+              w={{ base: "auto", md: "auto" }}
+              overflow="hidden"
+              pos="relative"
+              
+            >
+              {/* {fleets.isFeatured && (
               <Flex
                 alignItems="center"
                 p={1}
@@ -167,46 +166,46 @@ export default function Fleet() {
                 <Icon as={AiOutlineExclamationCircle} h={4} w={4} />
               </Flex>
             )} */}
-            <Flex ml="0 !important">
-              <Image
-                rounded="md"
-                w={{ base: "100%", md: "18rem" }}
-                h="auto"
-                objectFit="cover"
-                src={
-                  "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
-                  fleets.image_url
-                }
-                alt="fleets image"
-              />
-            </Flex>
-            <Stack
-              direction="column"
-              spacing={2}
-              w="100%"
-              mt={{ base: "5px !important", sm: 0 }}
-            >
-              <Flex justifyContent="space-between">
-                <chakra.h3
-                  fontSize={{ base: "lg", md: "xl" }}
-                  fontWeight="bold"
-                >
-                  {fleets.fleet_name}
-                </chakra.h3>
-                <chakra.h3
-                  fontSize={{ base: "lg", md: "xl" }}
-                  fontWeight="bold"
-                >
-                  {"IDR " + fleets.fleet_price_day}
-                </chakra.h3>
+              <Flex ml="0 !important">
+                <Image
+                  rounded="md"
+                  w={{ base: "100%", md: "18rem" }}
+                  h="100%"
+                  objectFit="cover"
+                  src={
+                    "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
+                    fleets.image_url
+                  }
+                  alt="fleets image"
+                />
               </Flex>
-              {/* <Box>
+              <Stack
+                direction="column"
+                spacing={2}
+                w="100%"
+                mt={{ base: "5px !important", sm: 0 }}
+              >
+                <Flex justifyContent="space-between">
+                  <chakra.h3
+                    fontSize={{ base: "lg", md: "xl" }}
+                    fontWeight="bold"
+                  >
+                    {fleets.fleet_name}
+                  </chakra.h3>
+                  <chakra.h3
+                    fontSize={{ base: "lg", md: "xl" }}
+                    fontWeight="bold"
+                  >
+                    {"IDR " + fleets.fleet_price_day}
+                  </chakra.h3>
+                </Flex>
+                {/* <Box>
                 <Text fontSize="lg" fontWeight="500">
                   {fleets.location}
                 </Text>
               </Box> */}
-              <Flex noOfLines={3} alignItems="center" color="gray.500">
-                {/* {fleets.detail.map((data, index) => (
+                <Flex noOfLines={3} alignItems="center" color="gray.500">
+                  {/* {fleets.detail.map((data, index) => (
                   <Fragment key={index}>
                     <Text fontSize={{ base: "sm", sm: "md" }}>{data}</Text>
                     {fleets.detail.length - 1 != index && (
@@ -216,23 +215,23 @@ export default function Fleet() {
                     )}
                   </Fragment>
                 ))} */}
-                {fleets.fleet_desc}
-              </Flex>
-              <Stack
-                direction={{ base: "column-reverse", sm: "row" }}
-                justifyContent="space-between"
-                alignItems={{ base: "flex-start", sm: "center" }}
-              >
-                <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
-                  Capacity : {fleets.fleet_capacity}
-                </Text>
-                <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
-                  Luggage : {fleets.fleet_luggage}
-                </Text>
-                <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
-                  Year : {fleets.fleet_year}
-                </Text>
-                {/* <Stack direction="row" spacing={1} mb="0 !important">
+                  {fleets.fleet_desc}
+                </Flex>
+                <Stack
+                  direction={{ base: "column-reverse", sm: "row" }}
+                  justifyContent="space-between"
+                  alignItems={{ base: "flex-start", sm: "center" }}
+                >
+                  <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
+                    Capacity : {fleets.fleet_capacity}
+                  </Text>
+                  <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
+                    Luggage : {fleets.fleet_luggage}
+                  </Text>
+                  <Text fontSize="md" mt={{ base: 1, sm: 0 }}>
+                    Year : {fleets.fleet_year}
+                  </Text>
+                  {/* <Stack direction="row" spacing={1} mb="0 !important">
                   <IconButton>
                     <Icon as={AiOutlineHeart} w={4} h={4} />
                   </IconButton>
@@ -241,11 +240,13 @@ export default function Fleet() {
                     <Text fontSize="sm">Show Phone no.</Text>
                   </IconButton>
                 </Stack> */}
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
-        ))}
-      </SimpleGrid>
+          ))}
+          </VStack>
+        </Flex>
+      </Stack>
 
       <Center h={{ base: 20, md: 50 }}>
         <Link href="#/main/fleets" mt={20} fontSize="sm" color="blue.400">
