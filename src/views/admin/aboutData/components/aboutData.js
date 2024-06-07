@@ -14,25 +14,28 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import QuillEditor from "components/richTextEditor/quill";
+import "theme/quill/styles.css";
 // Custom components
 import Card from "components/card/Card";
 import { createClient } from "@supabase/supabase-js";
-
+import Image from "views/admin/imageUpload";
 // Assets
 import { MdUpdate } from "react-icons/md";
 
-export default function FaqData(props) {
+export default function AboutData(props) {
   const supabase = createClient(
     process.env.REACT_APP_API_KEY,
     process.env.REACT_APP_ANON_KEY
   );
-  const [dataContact, setContact] = useState([]);
+  const [dataAbout, setAbout] = useState([]);
 
   // memo variable
-  const [inputContactName, setContactName] = useState();
-  const [inputContactEmail, setContactEmail] = useState();
-  const [inputContactAddress, setContactAddress] = useState();
-  const [inputContactWorkingHours, setContactWorkingHours] = useState();
+  const [inputAboutTitle, setAboutTitle] = useState();
+  const [inputAboutDesc, setAboutDesc] = useState();
+  const [inputImage, setImage] = useState(null);
 
   const {
     isOpen: isVisible,
@@ -40,17 +43,16 @@ export default function FaqData(props) {
     onOpen,
   } = useDisclosure({ defaultIsOpen: false });
 
-  const updateContact = async () => {
+  const updateAbout = async () => {
     try {
       const { data, error } = await supabase
-        .from("ourContacts")
+        .from("aboutUs")
         .update({
-          contact_name: inputContactName,
-          contact_email: inputContactEmail,
-          contact_address: inputContactAddress,
-          contact_working_hours: inputContactWorkingHours,
+          about_title: inputAboutTitle,
+          about_desc: inputAboutDesc,
+          image_url:inputImage,
         })
-        .eq("id", dataContact[0].id)
+        .eq("id", dataAbout[0].id)
         .select()
         .then((data) => {
           onOpen(true);
@@ -64,18 +66,17 @@ export default function FaqData(props) {
   };
 
   useEffect(() => {
-    getContact();
+    getAbout();
   }, []);
 
-  async function getContact() {
-    const { data } = await supabase.from("ourContacts").select().range(0, 1);
+  async function getAbout() {
+    const { data } = await supabase.from("aboutUs").select().range(0, 1);
     console.log("ini data contact", data[0]);
     console.log("ini data contact", data[0].contact_name);
-    setContact(data);
-    setContactName(data[0].contact_name);
-    setContactEmail(data[0].contact_email);
-    setContactAddress(data[0].contact_address);
-    setContactWorkingHours(data[0].contact_working_hours);
+    setAbout(data);
+    setAboutTitle(data[0].about_title);
+    setAboutDesc(data[0].about_desc);
+    setImage(data[0].image_url);
   }
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -94,7 +95,7 @@ export default function FaqData(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          Contact Data
+          About Data
         </Text>
       </Flex>
 
@@ -111,7 +112,7 @@ export default function FaqData(props) {
           colorScheme="blue"
           size="md"
           borderRadius="lg"
-          onClick={() => updateContact()}
+          onClick={() => updateAbout()}
         >
           Save
         </Button>
@@ -133,58 +134,39 @@ export default function FaqData(props) {
       <SimpleGrid columns={[1, null, 2]} spacing="40px" px="20px">
         <Box>
           <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-            Name
+            Title
           </Text>
           <Input
             focusBorderColor="black"
-            placeholder="Input Name"
+            placeholder="Input Title"
             borderRadius="10px"
             mb={3}
-            value={inputContactName}
-            onChange={(e) => setContactName(e.target.value)}
+            value={inputAboutTitle}
+            onChange={(e) => setAboutTitle(e.target.value)}
           />
         </Box>
         <Box>
           <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-            Email
+            Upload Cover
           </Text>
-          <Input
-            focusBorderColor="black"
-            placeholder="Input Email"
-            borderRadius="10px"
-            mb={3}
-            type="email"
-            value={inputContactEmail}
-            onChange={(e) => setContactEmail(e.target.value)}
+          <Image
+            url={inputImage}
+            previousImage={inputImage}
+            size={150}
+            onUpload={(event, url) => {
+              setImage(url);
+            }}
           />
         </Box>
       </SimpleGrid>
-      <SimpleGrid columns={[1, null, 2]} spacing="40px" px="20px">
+      <SimpleGrid columns={[1, null, 1]} spacing="40px" px="20px">
         <Box>
-          <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-            Address
+          <Text fontSize="md" fontWeight={500} mt={10} mb={1} ml={1}>
+            Description
           </Text>
-          <Input
-            focusBorderColor="black"
-            placeholder="Input Adress"
-            borderRadius="10px"
-            mb={3}
-            value={inputContactAddress}
-            onChange={(e) => setContactAddress(e.target.value)}
-          />
-        </Box>
-        <Box>
-          <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
-            Working Hours
-          </Text>
-          <Input
-            focusBorderColor="black"
-            placeholder="Input Working Hours"
-            borderRadius="10px"
-            mb={3}
-            value={inputContactWorkingHours}
-            onChange={(e) => setContactWorkingHours(e.target.value)}
-          />
+          <Box mx="auto" mt="30px">
+            <QuillEditor value={inputAboutDesc} onChange={setAboutDesc} />
+          </Box>
         </Box>
       </SimpleGrid>
     </Card>

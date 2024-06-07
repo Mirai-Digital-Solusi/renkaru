@@ -20,6 +20,7 @@ import FleetTables from "views/admin/fleetsTables";
 import FaqTables from "views/admin/faqsTables";
 import TestimonialTables from "views/admin/testimonialsTables";
 import ContactData from "views/admin/contactData";
+import AboutData from "views/admin/aboutData";
 
 // Public Imports
 import HomePublic from "views/main/home";
@@ -148,6 +149,14 @@ const routes = [
     icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
     path: "/contact",
     component: ContactData,
+    AuthRequired: true,
+  },
+  {
+    name: "About",
+    layout: "/admin",
+    icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
+    path: "/about",
+    component: AboutData,
     AuthRequired: true,
   },
   // Routes For Auth Section

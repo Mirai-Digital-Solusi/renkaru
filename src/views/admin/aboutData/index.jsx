@@ -1,6 +1,6 @@
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import ContactData from "views/admin/contactData/components/contactData";
+import AboutData from "views/admin/aboutData/components/aboutData";
 import React from "react";
 
 export default function Settings() {
@@ -11,7 +11,7 @@ export default function Settings() {
         columns={{ sm: 1, md: 1, lg: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        <ContactData/>
+        <AboutData/>
       </SimpleGrid>
     </Box>
   );

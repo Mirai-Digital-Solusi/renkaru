@@ -1,0 +1,57 @@
+/* Text Editor */
+
+body.chakra-ui-light .ql-toolbar.ql-snow {
+    border-color: rgb(226, 232, 240); /* Gray/Gray-100 */
+  }
+  
+  body.chakra-ui-dark .ql-toolbar.ql-snow {
+    border-color: rgba(255, 255, 255, 0.16); /* Gray/Gray-100 */
+  }
+  
+  body.chakra-ui-light .ql-container.ql-snow {
+    border-color: rgb(226, 232, 240); /* Gray/Gray-100 */
+  }
+  
+  body.chakra-ui-dark .ql-container.ql-snow {
+    border-color: rgba(255, 255, 255, 0.16); /* Gray/Gray-100 */
+  }
+  
+  body.chakra-ui-light .ql-snow .ql-picker-label {
+    color: rgb(26, 32, 44) !important;
+  }
+  body.chakra-ui-dark .ql-snow .ql-picker-label {
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+  
+  body.chakra-ui-light .ql-snow .ql-stroke {
+    stroke: rgb(26, 32, 44) !important;
+  }
+  body.chakra-ui-dark .ql-snow .ql-stroke {
+    stroke: rgba(255, 255, 255, 0.92) !important;
+  }
+  
+  body.chakra-ui-light .ql-snow .ql-fill {
+    fill: rgb(26, 32, 44) !important;
+  }
+  body.chakra-ui-dark .ql-snow .ql-fill {
+    fill: rgba(255, 255, 255, 0.92) !important;
+  }
+  
+  .ql-snow .ql-picker-label:hover {
+    color: rgb(79, 209, 197) !important;
+  }
+  
+  .ql-snow .ql-stroke:hover {
+    stroke: rgb(79, 209, 197) !important;
+  }
+  
+  .ql-snow .ql-fill:hover {
+    fill: rgb(79, 209, 197) !important;
+  }
+  
+  .ql-container.ql-snow {
+    min-height: 88px !important;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+  }
+  
