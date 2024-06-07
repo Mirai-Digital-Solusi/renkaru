@@ -9,6 +9,7 @@ import {
   MdBusiness,
   MdQuestionAnswer,
   MdDesignServices,
+  MdDocumentScanner,
   MdBookOnline,
 } from "react-icons/md";
 
@@ -20,6 +21,7 @@ import FleetTables from "views/admin/fleetsTables";
 import FaqTables from "views/admin/faqsTables";
 import TestimonialTables from "views/admin/testimonialsTables";
 import ContactData from "views/admin/contactData";
+import TermsData from "views/admin/termsData";
 import AboutData from "views/admin/aboutData";
 
 // Public Imports
@@ -149,6 +151,14 @@ const routes = [
     icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
     path: "/contact",
     component: ContactData,
+    AuthRequired: true,
+  },
+  {
+    name: "Terms",
+    layout: "/admin",
+    icon: <Icon as={MdDocumentScanner} width="20px" height="20px" color="inherit" />,
+    path: "/terms",
+    component: TermsData,
     AuthRequired: true,
   },
   {
