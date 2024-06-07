@@ -34,42 +34,57 @@ const articles = [
 ];
 
 export default function Terms() {
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
 
-    const supabase = createClient(
-        process.env.REACT_APP_API_KEY,
-        process.env.REACT_APP_ANON_KEY
-      );
-    
-      const [dataTerms, setTerms] = useState([]);
-    
-      useEffect(() => {
-        getTerms();
-    
-      }, []);
-    
-      async function getTerms() {
-        const { data } = await supabase.from("terms").select();
-        console.log("data services", data);
-        setTerms(data);
-      }
+  const [dataTerms, setTerms] = useState([]);
+  const [dataUpdate, setUpdate] = useState([]);
 
-      
+  useEffect(() => {
+    getTerms();
+  }, []);
+
+  async function getTerms() {
+    const { data } = await supabase.from("terms").select();
+    console.log("data services", data);
+    var tu = data[0].terms_updated.replace("T", " ").slice(0,10);
+    setUpdate(tu);
+    setTerms(data);
+  }
+
   return (
     <Container maxWidth="4xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" textAlign="center">
         Our Terms
       </chakra.h3>
       <chakra.h5 fontSize="1xl" fontWeight="bold" textAlign="center">
-        Updated At 5 Dec 2023
+        Updated at {dataUpdate}
       </chakra.h5>
       <Box position="relative"></Box>
       {dataTerms.map((terms, index) => (
-      <><Box as="h2" fontSize="2xl" fontWeight="600" mt={5} textAlign="justify">
-              {terms.terms_title}
-          </Box><Box as="h2" fontSize="2xl" fontWeight="400" mt={5} textAlign="justify">
-                  {terms.terms_desc}
-              </Box></>
-       ))}
+        <>
+          <Box
+            as="h2"
+            fontSize="2xl"
+            fontWeight="600"
+            mt={5}
+            textAlign="justify"
+          >
+            {terms.terms_title}
+          </Box>
+          <Box
+            as="h2"
+            fontSize="2xl"
+            fontWeight="400"
+            mt={5}
+            textAlign="justify"
+          >
+            {terms.terms_desc}
+          </Box>
+        </>
+      ))}
     </Container>
   );
 }

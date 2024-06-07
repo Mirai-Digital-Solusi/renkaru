@@ -21,7 +21,7 @@ import { createClient } from "@supabase/supabase-js";
 // Assets
 import { MdUpdate } from "react-icons/md";
 
-export default function ContactData(props) {
+export default function FaqData(props) {
   const supabase = createClient(
     process.env.REACT_APP_API_KEY,
     process.env.REACT_APP_ANON_KEY

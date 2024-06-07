@@ -1,4 +1,5 @@
 import {
+  chakra,
   Flex,
   Select,
   Input,
@@ -7,6 +8,7 @@ import {
   SimpleGrid,
   Button,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 
 import React from "react";
@@ -25,12 +27,20 @@ export default function HeaderFleet(props) {
 
   return (
     <Flex px="25px" justify={{ base: "center", md: "center", lg: "space-between" }} mb="20px">
+        
       <VStack
         spacing={10}
         alignItems="flex-start"
         mb={{ base: 5, md: 0 }}
         maxW="lg"
       >
+        <Text
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+        >
+          Check Availability
+        </Text>
         <InputGroup>
           <InputLeftAddon children="Date From" />
           <Input
