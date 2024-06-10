@@ -2,18 +2,8 @@ import {
   Box,
   chakra,
   Container,
-  Link,
-  Text,
-  HStack,
-  VStack,
-  Flex,
-  Icon,
-  Header,
-  useColorModeValue,
 } from "@chakra-ui/react";
-// Here we have used react-icons package for the icons
-import { FaRegNewspaper } from "react-icons/fa";
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import parse from "html-react-parser";
 

@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import {
   chakra,
   Container,
@@ -13,22 +12,26 @@ import {
   Center,
   Tag,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import parse from "html-react-parser";
 
 export default function AboutUs() {
-  const Content = ({ children, ...props }) => {
-    return (
-      <Text
-        fontSize="md"
-        textAlign="left"
-        lineHeight="1.375"
-        fontWeight="400"
-        color="gray.500"
-        {...props}
-      >
-        {children}
-      </Text>
-    );
-  };
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataAbout, setAbout] = useState([]);
+
+  useEffect(() => {
+    getAbout();
+  }, []);
+
+  async function getAbout() {
+    const { data } = await supabase.from("aboutUs").select();
+    setAbout(data);
+  }
 
   function DottedBox() {
     return (
@@ -73,6 +76,8 @@ export default function AboutUs() {
 
   return (
     <Container maxW="6xl" px={{ base: 6, md: 3 }} py={14}>
+      {dataAbout.map((about, index) => (
+        <>
       <Center h={{ base: 20, md: 50 }}>
         <Tag
           size="lg"
@@ -103,7 +108,10 @@ export default function AboutUs() {
             minW={{ base: "auto", md: "30rem" }}
             maxH="20rem"
             objectFit="cover"
-            src={`https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&auto=format&fit=crop&w=334&q=80`}
+            src={
+              "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
+              about.image_url
+            }
             rounded="md"
             fallback={<Skeleton />}
           />
@@ -117,26 +125,15 @@ export default function AboutUs() {
             fontWeight="bold"
             textAlign={{ base: "center", md: "left" }}
           >
-            Your Trusted Partner for Seamless Car Rental Experiences
+            {about.about_title}
           </chakra.h1>
         </Stack>
       </Stack>
-      <Box as="h2" fontSize="2xl" fontWeight="600" mt={10} textAlign="justify">
-        Your Trusted Partner
+      <Box as="h2" fontSize="2xl" fontWeight="400" mt={10} textAlign="justify">
+      {parse(about.about_desc)}
       </Box>
-      <Box as="h3" fontSize="2xl" fontWeight="200" mt={5} textAlign="justify">
-        It conveys a sense of reliability, partnership, and a company you can
-        count on. Trust is essential when choosing a car rental service.
-      </Box>
-      <Box as="h2" fontSize="2xl" fontWeight="600" mt={10} textAlign="justify">
-        Seamless Car Rental Experiences
-      </Box>
-      <Box as="h3" fontSize="2xl" fontWeight="200" mt={5} textAlign="justify">
-        It implies that the company aims to provide hassle-free, smooth, and
-        efficient car rental experiences for their customers. It's a concise
-        title that can pique interest and invites the reader to learn more about
-        the company's value proposition in the following "About Us" section.
-      </Box>
+      </>
+      ))}
     </Container>
   );
 }
