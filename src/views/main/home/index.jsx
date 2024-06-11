@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 import { NavLink, useHistory } from "react-router-dom";
 // Chakra imports
 import {
@@ -38,6 +39,7 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import AuthService from "services/auth.services.js";
 
 import Heroes from "components/home/Heroes";
+import HeroesTwo from "components/homeTwo/Heroes";
 import Service from "components/home/Service";
 import Fleet from "components/home/Fleet";
 import Testimonial from "components/home/Testimonial";
@@ -46,6 +48,13 @@ import Faq from "components/home/Faq";
 
 export default function Home() {
   const { children, illustrationBackground } = illustration;
+  const supabase = createClient(
+    process.env.REACT_APP_API_KEY,
+    process.env.REACT_APP_ANON_KEY
+  );
+
+  const [dataThemes, setThemes] = useState([]);
+  const [inputThemesOption, setThemesOption] = useState();
 
   function DottedBox() {
     return (
@@ -115,10 +124,23 @@ export default function Home() {
     return error;
   }
 
+  useEffect(() => {
+    getThemes();
+  }, []);
+
+
+  
+
+  async function getThemes() {
+    const { data } = await supabase.from("themes").select();
+    setThemes(data);
+    setThemesOption(data[0].theme_options)
+  }
+
   return (
     <DefaultMain>
       <Flex position="relative" h="max-content">
-        <Heroes />
+        { inputThemesOption === "HomeDefault" ?  <Heroes /> : inputThemesOption === "HomeTwo" ? <HeroesTwo /> : null}      
       </Flex>
       <Flex position="relative" h="max-content">
         <Service />
