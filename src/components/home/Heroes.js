@@ -62,7 +62,8 @@ import { Field, Form, Formik } from "formik";
 import { HSeparator } from "components/separator/Separator";
 import DefaultMain from "layouts/main/Default";
 // Assets
-import illustration from "assets/img/auth/auth.jpg";
+import illustration from "assets/img/auth/heroesOne.jpg";
+import illustrationTwo from "assets/img/auth/heroesTwo.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { GoChevronRight } from "react-icons/go";
 import { MdBolt } from "react-icons/md";
@@ -260,7 +261,7 @@ export default function Heroes() {
       >
         <ModalOverlay
           bg="blackAlpha.300"
-          backdropFilter="blur(10px) hue-rotate(0deg)"
+          backdropFilter="blur(10px) hue-rotate(10deg)"
         />
 
         <ModalContent>
@@ -420,7 +421,7 @@ export default function Heroes() {
               textAlign="left"
               lineHeight="1.375"
               fontWeight="400"
-              color="gray.500"
+              color="gray.700"
             >
               Discover and book the ideal rental car for your next journey with
               ease. Our service offers a wide selection of vehicles to suit
@@ -476,22 +477,50 @@ export default function Heroes() {
       </Flex>
       <Box
         display={{ base: "none", md: "block" }}
-        h="100%"
-        minH="100vh"
+        h="60%"
+        minH="60vh"
         w={{ lg: "50vw", "2xl": "44vw" }}
         position="absolute"
         right="0px"
+        top="5em"
       >
         <Flex
           bg={`url(${illustration})`}
           justify="center"
           align="end"
-          w="100%"
+          w="80%"
           h="100%"
+          left="4em"
+          bgSize="cover"
+          bgPosition="100%"
+          position="absolute"
+          borderTopRightRadius={{ lg: "100px", xl: "100px" }}
+          borderBottomRightRadius={{ lg: "20px", xl: "20px" }}
+          borderTopLeftRadius={{ lg: "20px", xl: "20px" }}
+        ></Flex>
+      </Box>
+      <Box
+        display={{ base: "none", md: "block" }}
+        h="60%"
+        minH="60vh"
+        w={{ lg: "50vw", "2xl": "44vw" }}
+        position="absolute"
+        right="0"
+        top="20em"
+      >
+        <Flex
+          bg={`url(${illustrationTwo})`}
+          justify="center"
+          align="end"
+          w="50%"
+          h="50%"
           bgSize="cover"
           bgPosition="50%"
           position="absolute"
-          borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}
+          borderBottomLeftRadius={{ lg: "40px", xl: "50px" }}
+          borderTopRightRadius={{ lg: "100px", xl: "100px" }}
+          borderBottomRightRadius={{ lg: "20px", xl: "20px" }}
+          borderTopLeftRadius={{ lg: "20px", xl: "20px" }}
         ></Flex>
       </Box>
     </Flex>

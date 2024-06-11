@@ -139,7 +139,7 @@ export default function Home() {
 
   return (
     <DefaultMain>
-      <Flex position="relative" h="max-content">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #c1dfc4 0%, #deecdd 100%)">
         { inputThemesOption === "HomeDefault" ?  <Heroes /> : inputThemesOption === "HomeTwo" ? <HeroesTwo /> : null}      
       </Flex>
       <Flex position="relative" h="max-content">
