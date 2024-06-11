@@ -111,25 +111,20 @@ export default function Features(props) {
   return (
     <Container maxW="6xl" p={{ base: 5, md: 5 }} mt={{ md: "3em" }}>
       <Center h={{ base: 20, md: 50 }}>
-        <Tag
-          size="lg"
-          variant="solid"
-          colorScheme="teal"
-          borderRadius="full"
-          marginInline="auto"
-        >
-          Our Services
-        </Tag>
+      <chakra.h3 bg="#FFFFFF" p={1} pl={3} pr={3} borderRadius={20} mb={5} color="#2F4858" fontSize="xl" fontWeight="bold" textAlign="center">
+        Our Services
+      </chakra.h3>
       </Center>
 
-      <chakra.h3 fontSize="4xl" fontWeight="bold" mb={10} textAlign="center">
-        We Have Everything You Need
+      <chakra.h3 color="white" fontSize="4xl" fontWeight={700} mb={10} textAlign="center">
+        We Have&nbsp;
+        <Text as={'u'} color={'#2F4858'}>Everything</Text>&nbsp;You Need!
       </chakra.h3>
       <SimpleGrid
         columns={{ base: 1, sm: 1, md: 3 }}
         placeItems="center"
         spacing={10}
-        mb={4}
+        mb={20}
       >
         {dataServices.map((feature, indexServices) => (
           <Box
@@ -148,7 +143,7 @@ export default function Features(props) {
               left={0}
               right={0}
               top="-1.5rem"
-              boxShadow="lg"
+              boxShadow="xl"
             >
               <Image
                 boxSize="100px"

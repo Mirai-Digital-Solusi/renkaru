@@ -260,8 +260,8 @@ export default function Heroes() {
         scrollBehavior={"inside"}
       >
         <ModalOverlay
-          bg="blackAlpha.300"
-          backdropFilter="blur(10px) hue-rotate(10deg)"
+          bg="blackAlpha.500"
+          backdropFilter="blur(7px) hue-rotate(350deg)"
         />
 
         <ModalContent>
