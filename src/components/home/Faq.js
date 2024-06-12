@@ -56,17 +56,11 @@ export default function Faq() {
   }
 
   return (
-    <Container maxW="7xl" py={10} px={{ base: 5, md: 8 }}>
+    <Container maxW="7xl" py={10} px={{ base: 5, md: 8 }} mb={10}>
       <Center h={{ base: 20, md: 50 }}>
-        <Tag
-          size="lg"
-          variant="solid"
-          colorScheme="teal"
-          borderRadius="full"
-          marginInline="auto"
-        >
-          FAQ
-        </Tag>
+      <chakra.h3 bg="#00A979" p={1} pl={5} pr={5} borderRadius={20} mb={5} color="#FFFFFF" fontWeight="bold" textAlign="center">
+        FAQs
+      </chakra.h3>
       </Center>
 
       <chakra.h3 fontSize="4xl" fontWeight="bold" textAlign="center">
@@ -92,11 +86,12 @@ export default function Faq() {
               mt={{ base: 10, md: 0 }}
               m={{ base: "auto", md: 0 }}
             >
-              FAQ
+              Frequently Ask Questions
             </chakra.h2>
             <Text
               fontSize="xl"
               color="gray.600"
+              fontWeight="bold"
               textAlign={{ base: "center", md: "left" }}
               m={{ base: "auto", md: 0 }}
             >
@@ -104,19 +99,19 @@ export default function Faq() {
             </Text>
           </VStack>
         </Box>
-        <Box>
+        <Box bg="#1953DA" borderRadius={20} p={{base: 0, md: 10}}>
           <Accordion>
             { dataFaqs.map((faq, index) => (
-            <AccordionItem>
+            <AccordionItem color="#FFFFFF">
               <h2>
                 <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left" fontWeight="bold" p={2}>
+                  <Box as="span" flex="1" textAlign="left" fontSize="larger" fontWeight="bold" p={2}>
                     {faq.faq_question}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel pb={4}>
+              <AccordionPanel pb={4} fontSize="large">
               {faq.faq_answer}
               </AccordionPanel>
             </AccordionItem>

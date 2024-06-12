@@ -80,7 +80,7 @@ export default function Contact() {
   return (
     <Container maxW="7xl" py={10} px={{ base: 5, md: 8 }}>
          <Center h={{ base: 20, md: 50 }}>
-         <chakra.h3 bg="#474554" p={1} pl={5} pr={5} borderRadius={20} mb={5} color="#F5F5F5" fontWeight="bold" textAlign="center">
+         <chakra.h3 bg="#464555" p={1} pl={5} pr={5} borderRadius={20} mb={5} color="#F5F5F5" fontWeight="bold" textAlign="center">
         Our Contact
       </chakra.h3>
       </Center>
@@ -116,7 +116,7 @@ export default function Contact() {
           as="form"
           spacing={8}
           w="100%"
-          bg="#474554"
+          bg="#464555"
           rounded="xl"
           boxShadow="lg"
           p={{ base: 5, sm: 10 }}

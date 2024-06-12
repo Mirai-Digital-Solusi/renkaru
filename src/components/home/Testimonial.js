@@ -19,38 +19,6 @@ import { FaQuoteRight } from "react-icons/fa";
 import React, { useMemo, useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-const testimonials = [
-  {
-    username: "Ben Parker",
-    position: "CEO",
-    company: "Foodtesla",
-    image:
-      "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&auto=format&fit=crop&w=334&q=80",
-    content: `Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit
-        rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam,
-        risus at semper`,
-  },
-  {
-    username: "Ben Parker",
-    position: "CEO",
-    company: "Foodtesla",
-    image:
-      "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&auto=format&fit=crop&w=334&q=80",
-    content: `Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit
-        rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam,
-        risus at semper`,
-  },
-  {
-    username: "Ben Parker",
-    position: "CEO",
-    company: "Foodtesla",
-    image:
-      "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&auto=format&fit=crop&w=334&q=80",
-    content: `Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit
-        rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam,
-        risus at semper`,
-  },
-];
 
 export default function Testimonials() {
   const supabase = createClient(

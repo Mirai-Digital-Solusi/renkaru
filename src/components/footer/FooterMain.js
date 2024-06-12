@@ -48,7 +48,7 @@ import {
           <Text fontSize="md">
             Built by{' '}
             <Link
-              href="https://github.com/MA-Ahmad"
+              href="https://github.com/Mirai-Digital-Solusi/renkaru"
               textDecoration="underline"
               _hover={{ textDecoration: 'underline' }}
               isExternal
