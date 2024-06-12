@@ -145,7 +145,7 @@ export default function Home() {
       <Flex position="relative" h="max-content" bgGradient="linear(to-tr, #ff5858 0%, #f09819 60%)">
         <Service />
       </Flex>
-      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #fdfbfb 0%, #ebedee 100%)">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #e6e9f0 0%, #eef1f5 100%)">
         <FleetHome />
       </Flex>
       <Flex position="relative" h="max-content" bgGradient="linear(to-t, #C541C1 0%, #330867 45%)">

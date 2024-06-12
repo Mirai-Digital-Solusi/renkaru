@@ -107,15 +107,9 @@ export default function Fleet() {
   return (
     <Container maxW="6xl" p={{ base: 5, md: 12 }} margin="0 auto">
       <Center h={{ base: 20, md: 50 }}>
-        <Tag
-          size="lg"
-          variant="solid"
-          colorScheme="teal"
-          borderRadius="full"
-          marginInline="auto"
-        >
-          Our Fleet
-        </Tag>
+      <chakra.h3 bgGradient="linear(to-r, teal.400, green.500)" p={2} pl={7} pr={7} fontSize="large" borderRadius={20} mb={5} color="#FFFFFF" fontWeight="bold" textAlign="center">
+        Our Fleet
+      </chakra.h3>
       </Center>
 
       <chakra.h3 fontSize="4xl" fontWeight="bold" textAlign="center">
@@ -128,7 +122,7 @@ export default function Fleet() {
         maxW={'445px'}
         w={'full'}
         bg="#FFFFFF"
-        boxShadow={'2xl'}
+        boxShadow={'specialShadows'}
         rounded={'md'}
         p={6}
         overflow={'hidden'}>
