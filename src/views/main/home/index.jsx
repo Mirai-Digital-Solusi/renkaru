@@ -145,16 +145,16 @@ export default function Home() {
       <Flex position="relative" h="max-content" bgGradient="linear(to-tr, #ff5858 0%, #f09819 60%)">
         <Service />
       </Flex>
-      <Flex position="relative" h="max-content">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #fdfbfb 0%, #ebedee 100%)">
         <Fleet />
       </Flex>
-      <Flex position="relative" h="max-content">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #30cfd0 0%, #330867 50%)">
         <Testimonial />
       </Flex>
-      <Flex position="relative" h="max-content">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #fdfbfb 0%, #ebedee 100%)">
         <Faq />
       </Flex>
-      <Flex position="relative" h="max-content">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #fdfbfb 0%, #ebedee 100%)">
         <Contact />
       </Flex>
     </DefaultMain>

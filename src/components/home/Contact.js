@@ -80,22 +80,16 @@ export default function Contact() {
   return (
     <Container maxW="7xl" py={10} px={{ base: 5, md: 8 }}>
          <Center h={{ base: 20, md: 50 }}>
-        <Tag
-          size="lg"
-          variant="solid"
-          colorScheme="teal"
-          borderRadius="full"
-          marginInline="auto"
-        >
-          Our Contact
-        </Tag>
+         <chakra.h3 bg="#474554" p={1} pl={5} pr={5} borderRadius={20} mb={5} color="#F5F5F5" fontWeight="bold" textAlign="center">
+        Our Contact
+      </chakra.h3>
       </Center>
 
       <chakra.h3 fontSize="4xl" fontWeight="bold" textAlign="center">
       Need Assistance? Contact Us
       </chakra.h3>
         <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
-      <Flex flex={1} mt={{ base: 5, md: 20 }}>
+      <Flex flex={1} mt={{ base: 5, md: 10 }} ml={{ base: 0, md: 10}}>
 
       <VStack spacing={10} alignItems="flex-start" mb={{ base: 5, md: 0 }} maxW="md">
       <chakra.h3 fontSize="3xl" fontWeight="bold" textAlign="center">
@@ -113,46 +107,46 @@ export default function Contact() {
           ))}
         </VStack>
       </Flex>
-      <Flex p={8} align="center" justifyContent="center">
+      <Flex p={8} >
         <Stack spacing={4}>
-          <chakra.h3 fontSize="3xl" fontWeight="bold" textAlign="center" mt={{ base: 5, md: 10 }}>
+          <chakra.h3 fontSize="3xl" fontWeight="bold" textAlign="center" mt={{ base: 5, md: 2 }}>
       Send a Message
       </chakra.h3>
           <VStack
           as="form"
           spacing={8}
           w="100%"
-          bg={useColorModeValue('white', 'gray.700')}
-          rounded="lg"
+          bg="#474554"
+          rounded="xl"
           boxShadow="lg"
           p={{ base: 5, sm: 10 }}
         >
           <VStack spacing={4} w="100%">
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               <FormControl id="name">
-                <FormLabel>Name</FormLabel>
-                <Input type="text" placeholder="Test" rounded="md" />
+                <FormLabel color="#F5F5F5">Name</FormLabel>
+                <Input type="text" bg="#F5F5F5" placeholder="Test" rounded="md" />
               </FormControl>
               <FormControl id="email">
-                <FormLabel>Email</FormLabel>
-                <Input type="email" placeholder="test@test.com" rounded="md" />
+                <FormLabel color="#F5F5F5">Email</FormLabel>
+                <Input type="email" bg="#F5F5F5" placeholder="test@test.com" rounded="md" />
               </FormControl>
             </Stack>
             <FormControl id="subject">
-              <FormLabel>Subject</FormLabel>
-              <Input type="text" placeholder="How this service work?" rounded="md" />
+              <FormLabel color="#F5F5F5">Subject</FormLabel>
+              <Input type="text" bg="#F5F5F5" placeholder="How this service work?" rounded="md" />
             </FormControl>
             <FormControl id="message">
-              <FormLabel>Message</FormLabel>
-              <Textarea size="lg" placeholder="Enter your message" rounded="md" />
+              <FormLabel color="#F5F5F5">Message</FormLabel>
+              <Textarea size="lg" bg="#F5F5F5" placeholder="Enter your message" rounded="md" />
             </FormControl>
           </VStack>
           <VStack w="100%">
             <Button
-              bg="green.300"
-              color="white"
+              bg="#F5F5F5"
+              color="#474554"
               _hover={{
-                bg: 'green.500'
+                bg: '#F5F5F5'
               }}
               rounded="md"
               w={{ base: '100%', md: 'max-content' }}

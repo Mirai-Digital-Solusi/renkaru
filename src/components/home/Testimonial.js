@@ -74,22 +74,19 @@ export default function Testimonials() {
   const backgroundServices = useColorModeValue("gray.100", "gray.700");
 
   return (
-    <Container maxW="6xl" p={{ base: 5, md: 5 }} mt={{ md: "3em" }}>
+    <Container maxW="6xl" p={{ base: 5, md: 5 }} mt={{ md: "3em" }} mb={10}>
       <Center h={{ base: 20, md: 50 }}>
-        <Tag
-          size="lg"
-          variant="solid"
-          colorScheme="teal"
-          borderRadius="full"
-          marginInline="auto"
-        >
-          Testimonials
-        </Tag>
+      <chakra.h3 bg="#FFFFFF" p={1} pl={5} pr={5} borderRadius={20} mb={5} color="#2F4858" fontWeight="bold" textAlign="center">
+        Testimonials
+      </chakra.h3>
       </Center>
 
-      <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
+      <chakra.h3 fontSize="4xl" fontFamily="highlightFont" color="#FFFFFF" fontWeight="bold" textAlign="center">
         What People Are Saying About Us
       </chakra.h3>
+      <chakra.h4 fontSize="2xl" color="#FFFFFF" mb={10} textAlign="center">
+      Discover Why Our Customers Rave About Our Exceptional Service
+      </chakra.h4>
       <SimpleGrid
         columns={{ base: 1, sm: 1, md: 3 }}
         placeItems="center"
@@ -101,16 +98,18 @@ export default function Testimonials() {
             spacing={3}
             p={{ base: 4, sm: 8 }}
             bg={backgroundServices}
-            borderTop="2px solid"
+            borderTop="5px solid"
             borderColor="green.400"
+            borderTopRightRadius="lg"
+            borderTopLeftRadius="lg"
             borderBottomLeftRadius="lg"
             borderBottomRightRadius="lg"
             maxW="25rem"
             margin="0 auto"
             boxShadow="lg"
           >
-            <Icon as={FaQuoteRight} w={8} h={8} color="green.400" />
-            <Text p={5} color="gray.500">
+            <Icon as={FaQuoteRight} w={8} h={8} color="#00A585" />
+            <Text p={5} color="gray.500" textAlign="center">
               {testimonial.testimonial_review}
             </Text>
             <VStack alignItems="center">

@@ -110,7 +110,7 @@ export default function Faq() {
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left">
+                  <Box as="span" flex="1" textAlign="left" fontWeight="bold" p={2}>
                     {faq.faq_question}
                   </Box>
                   <AccordionIcon />
