@@ -41,7 +41,7 @@ import AuthService from "services/auth.services.js";
 import Heroes from "components/home/Heroes";
 import HeroesTwo from "components/homeTwo/Heroes";
 import Service from "components/home/Service";
-import Fleet from "components/home/Fleet";
+import FleetHome from "components/home/FleetHome";
 import Testimonial from "components/home/Testimonial";
 import Contact from "components/home/Contact";
 import Faq from "components/home/Faq";
@@ -146,7 +146,7 @@ export default function Home() {
         <Service />
       </Flex>
       <Flex position="relative" h="max-content" bgGradient="linear(to-t, #fdfbfb 0%, #ebedee 100%)">
-        <Fleet />
+        <FleetHome />
       </Flex>
       <Flex position="relative" h="max-content" bgGradient="linear(to-t, #C541C1 0%, #330867 45%)">
         <Testimonial />
