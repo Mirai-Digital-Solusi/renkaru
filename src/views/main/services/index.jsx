@@ -7,12 +7,16 @@ import {
 import DefaultMain from "layouts/main/Default";
 // Assets;
 import Service from "components/home/Service";
+import ServiceHero from "components/home/ServiceHero";
 import Contact from "components/home/Contact";
 
 export default function Services() {
 
   return (
     <DefaultMain>
+      <Flex position="relative" h="max-content">
+        <ServiceHero />
+      </Flex>
       <Flex position="relative" h="max-content">
         <Service />
       </Flex>

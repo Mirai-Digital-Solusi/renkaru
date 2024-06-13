@@ -40,7 +40,7 @@ import AuthService from "services/auth.services.js";
 
 import Heroes from "components/home/Heroes";
 import HeroesTwo from "components/homeTwo/Heroes";
-import Service from "components/home/Service";
+import ServiceHome from "components/home/ServiceHome";
 import FleetHome from "components/home/FleetHome";
 import Testimonial from "components/home/Testimonial";
 import Contact from "components/home/Contact";
@@ -143,7 +143,7 @@ export default function Home() {
         { inputThemesOption === "HomeDefault" ?  <Heroes /> : inputThemesOption === "HomeTwo" ? <HeroesTwo /> : null}      
       </Flex>
       <Flex position="relative" h="max-content" bgGradient="linear(to-tr, #ff5858 0%, #f09819 60%)">
-        <Service />
+        <ServiceHome />
       </Flex>
       <Flex position="relative" h="max-content" bgGradient="linear(to-t, #e6e9f0 0%, #eef1f5 100%)">
         <FleetHome />

@@ -89,17 +89,15 @@ export default function Contact() {
       Need Assistance? Contact Us
       </chakra.h3>
         <Stack minH="100vh" direction={{ base: 'column', md: 'row' }}>
-      <Flex flex={1} mt={{ base: 5, md: 10 }} ml={{ base: 0, md: 10}}>
+      <Flex flex={1} mt={{ base: 10, md: 10 }} ml={{ base: 0, md: 10}} textAlign={{ base: "center", md: "justify" }}>
 
-      <VStack spacing={10} alignItems="flex-start" mb={{ base: 5, md: 0 }} maxW="md">
-      <chakra.h3 fontSize="3xl" fontWeight="bold" textAlign="center">
+      <VStack alignItems={{ base: "", md: "flex-start" }} spacing={10} mb={{ base: 5, md: 0 }} minW={{ base: "100%", md: "sm" }}>
+      <chakra.h3 fontSize="3xl" fontWeight="bold" >
       Find Us
       </chakra.h3>
           {dataContacts.map((data) => (
             <Box key={data.id}>
-              <HStack spacing={2}>
-                <Text fontSize="xl">{data.label}</Text>
-              </HStack>
+               <Text fontSize="xl" >{data.label}</Text>
               <Text fontSize="md" color="gray.500">
                 {data.value}
               </Text>
