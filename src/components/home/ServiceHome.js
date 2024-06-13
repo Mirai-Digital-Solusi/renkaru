@@ -87,13 +87,13 @@ export default function ServicesHome(props) {
                   "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
                   feature.image_url
                 }
-                alt="Dan Abramov"
+                alt="Services Image"
               />
             </Flex>
             <chakra.h3 fontWeight="semibold" fontSize="2xl" mt={6}>
               {feature.name}
             </chakra.h3>
-            <Text fontSize="md" mt={4}>
+            <Text noOfLines={4} fontSize="md" mt={4}>
               {feature.description}
             </Text>
           </Box>
