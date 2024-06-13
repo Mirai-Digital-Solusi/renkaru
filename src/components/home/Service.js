@@ -17,11 +17,16 @@ import {
   Stack,
   Button,
   Icon,
+  StackDivider,
 } from "@chakra-ui/react";
 import React, { useMemo, useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { FaGithub } from "react-icons/fa";
-import { BsDiscord } from "react-icons/bs";
+import {
+  IoAnalyticsSharp,
+  IoLogoBitcoin,
+  IoSearchSharp,
+  IoCheckmarkSharp,
+} from 'react-icons/io5';
 import { FcAssistant, FcIdea, FcInspection } from "react-icons/fc";
 
 export default function Features(props) {
@@ -55,8 +60,25 @@ export default function Features(props) {
     );
   };
 
+  const FeatureServices = ({ text, icon, iconBg }) => {
+    return (
+      <Stack direction={'row'} align={'center'}>
+        <Flex
+          w={8}
+          h={8}
+          align={'center'}
+          justify={'center'}
+          rounded={'full'}
+          bg={iconBg}>
+          {icon}
+        </Flex>
+        <Text fontWeight={600}>{text}</Text>
+      </Stack>
+    );
+  };
+
   return (
-    <Container maxW="100%">
+    <Container maxW="100%" mb={{ base: 0, md: 10 }}>
       <Box
         maxW="5xl"
         p={4}
@@ -124,53 +146,79 @@ export default function Features(props) {
           </Stack>
         </Box>
       </Box>
-      <SimpleGrid
-        columns={{ base: 1, sm: 1, md: 3 }}
-        placeItems="center"
-        spacing={10}
-        mb={20}
-        mt={20}
+      <chakra.h3 mt={{base: 10, md: 20}} pl={{base: 0, md: 80}} pr={{base: 0, md: 80}} color="purple.700" fontSize="large" fontWeight="bold" textAlign="center">
+      EXPLORE OUR RENTAL SERVICES
+      </chakra.h3>
+      <chakra.h4 fontSize="4xl" fontWeight="bold" mb={12} textAlign="center">
+      Discover Our Service to Craft <br /> Your Unforgettable Journey
+      </chakra.h4>
+      {dataServices.map((feature, indexServices) => (
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        justifyContent="center"
+        borderRadius="md"
       >
-        {dataServices.map((feature, indexServices) => (
-          <Box
-            key={indexServices}
-            bg={backgroundServices}
-            p={6}
+        <Box p={10} pl={{base: 0, md: 20}} pr={{base: 0, md: 20}} mr={{ base: 0, md: 0 }} pos="relative">
+          <Image
+            boxShadow="lg"
+            w="100%"
+            h="100%"
+            minW={{ base: "auto", md: "30rem" }}
+            maxH="20rem"
+            objectFit="cover"
+            src={
+              "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
+              feature.image_url
+            }
             rounded="xl"
-            textAlign="center"
-            pos="relative"
+            
+          />
+        </Box>
+        <Stack direction="column" p={10} pr={{base: 0, md: 20}} spacing={6} justifyContent="center">
+          <chakra.h1
+            fontSize="3xl"
+            mt={{ base: 5, md: 0 }}
+            mb={{ base: 5, md: 0 }}
+            lineHeight={1}
+            fontWeight="bold"
+            textAlign={{ base: "center", md: "left" }}
           >
-            <Flex
-              w="max-content"
-              color="white"
-              rounded="xl"
-              marginInline="auto"
-              left={0}
-              right={0}
-              top="-1.5rem"
-              boxShadow="xl"
-              borderRadius={20}
-            >
-              <Image
-                boxSize="100px"
-                objectFit="cover"
-                borderRadius={20}
-                src={
-                  "https://whzccgiovjwafxfnjvaf.supabase.co/storage/v1/object/public/images/" +
-                  feature.image_url
-                }
-                alt="Dan Abramov"
+            {feature.name}
+          </chakra.h1>
+          <Box as="h2" fontSize="xl" fontWeight="400" textAlign="justify">
+          {feature.description}
+          
+      </Box>
+      <Stack
+            spacing={4}
+            divider={
+              <StackDivider
+                borderColor={'gray.500'}
               />
-            </Flex>
-            <chakra.h3 fontWeight="semibold" fontSize="2xl" mt={6}>
-              {feature.name}
-            </chakra.h3>
-            <Text fontSize="md" mt={4}>
-              {feature.description}
-            </Text>
-          </Box>
-        ))}
-      </SimpleGrid>
+            }>
+            <FeatureServices
+              icon={
+                <Icon as={IoCheckmarkSharp} color={'#FFFFFF'} w={5} h={5} />
+              }
+              iconBg={'green.500'}
+              text={'Quality and Reliability'}
+            />
+            <FeatureServices
+              icon={<Icon as={IoCheckmarkSharp} color={'#FFFFFF'} w={5} h={5} />}
+              iconBg={'green.500'}
+              text={'Unmatched Convenience'}
+            />
+            <FeatureServices
+              icon={
+                <Icon as={IoCheckmarkSharp} color={'#FFFFFF'} w={5} h={5} />
+              }
+              iconBg={'green.500'}
+              text={'Trusted and Experienced'}
+            />
+          </Stack>
+        </Stack>
+      </Stack>
+      ))}
     </Container>
   );
 }
