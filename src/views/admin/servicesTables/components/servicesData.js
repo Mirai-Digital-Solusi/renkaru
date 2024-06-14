@@ -111,12 +111,17 @@ export default function ServiceData(props) {
   } = useDisclosure();
 
   const insertServices = async () => {
-    let delimitedInputFactListArray = inputFactListArray.join('; '); 
+    let delimitedInputFactListArray = inputFactListArray.join("; ");
     try {
       const { data, error } = await supabase
         .from("services")
         .insert([
-          { name: inputName, description: inputDesc, service_fact: delimitedInputFactListArray, image_url: inputImage },
+          {
+            name: inputName,
+            description: inputDesc,
+            service_fact: delimitedInputFactListArray,
+            image_url: inputImage,
+          },
         ])
         .select()
         .then((data) => {
@@ -131,7 +136,7 @@ export default function ServiceData(props) {
   };
 
   const updateServices = async (dataServices) => {
-    let delimitedInputFactListArray = inputFactListArray.join('; '); 
+    let delimitedInputFactListArray = inputFactListArray.join("; ");
     try {
       const { data, error } = await supabase
         .from("services")
@@ -224,7 +229,9 @@ export default function ServiceData(props) {
     setSelectedRow(data);
     setName(data.row.cells[0].value);
     setDesc(data.row.cells[1].value);
-    setFactListArray(data.row.cells[2].value ? data.row.cells[2].value.split('; ') : "");
+    setFactListArray(
+      data.row.cells[2].value ? data.row.cells[2].value.split("; ") : ""
+    );
     setImage(data.row.cells[3].value);
     onOpenUpdate(true);
   }
@@ -322,11 +329,17 @@ export default function ServiceData(props) {
             {inputFactListArray
               ? inputFactListArray.length === 0
                 ? null
-                : inputFactListArray.flatMap((x) => (
-                    <Tag ml={1} mb={5} size={"md"} variant="solid" colorScheme="teal">
-                      {x}
+                : inputFactListArray.flatMap((item) => (
+                    <Tag
+                      ml={1}
+                      mb={5}
+                      size={"md"}
+                      variant="solid"
+                      colorScheme="teal"
+                    >
+                      {item}
                       <TagCloseButton
-                        onClick={(e) => removeDataFromFactList(x)}
+                        onClick={(e) => removeDataFromFactList(item)}
                       />
                     </Tag>
                   ))
@@ -416,11 +429,17 @@ export default function ServiceData(props) {
             {inputFactListArray
               ? inputFactListArray.length === 0
                 ? null
-                : inputFactListArray.flatMap((x) => (
-                    <Tag ml={1} mb={5} size={"md"} variant="solid" colorScheme="teal">
-                      {x}
+                : inputFactListArray.flatMap((item) => (
+                    <Tag
+                      ml={1}
+                      mb={5}
+                      size={"md"}
+                      variant="solid"
+                      colorScheme="teal"
+                    >
+                      {item}
                       <TagCloseButton
-                        onClick={(e) => removeDataFromFactList(x)}
+                        onClick={(e) => removeDataFromFactList(item)}
                       />
                     </Tag>
                   ))

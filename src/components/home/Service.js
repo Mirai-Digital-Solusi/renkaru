@@ -36,6 +36,7 @@ export default function Features(props) {
   );
 
   const [dataServices, setServices] = useState([]);
+  const [inputFactListArray, setFactListArray] = useState([]);
 
   useEffect(() => {
     getServices();
@@ -216,27 +217,26 @@ export default function Features(props) {
               spacing={4}
               divider={<StackDivider borderColor={"gray.500"} />}
             >
-              <FeatureServices
-                icon={
-                  <Icon as={IoCheckmarkSharp} color={"#FFFFFF"} w={5} h={5} />
-                }
-                iconBg={"green.500"}
-                text={"Quality and Reliability"}
-              />
-              <FeatureServices
-                icon={
-                  <Icon as={IoCheckmarkSharp} color={"#FFFFFF"} w={5} h={5} />
-                }
-                iconBg={"green.500"}
-                text={"Unmatched Convenience"}
-              />
-              <FeatureServices
-                icon={
-                  <Icon as={IoCheckmarkSharp} color={"#FFFFFF"} w={5} h={5} />
-                }
-                iconBg={"green.500"}
-                text={"Trusted and Experienced"}
-              />
+              {feature.service_fact
+                ? feature.service_fact.length === 0
+                  ? null
+                  : feature.service_fact
+                      .split("; ")
+                      .flatMap((item) => (
+                        <FeatureServices
+                          icon={
+                            <Icon
+                              as={IoCheckmarkSharp}
+                              color={"#FFFFFF"}
+                              w={5}
+                              h={5}
+                            />
+                          }
+                          iconBg={"green.500"}
+                          text={item}
+                        />
+                      ))
+                : null}
             </Stack>
           </Stack>
         </Stack>
