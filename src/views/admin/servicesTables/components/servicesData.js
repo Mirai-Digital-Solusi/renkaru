@@ -36,6 +36,8 @@ import {
   Stack,
   Textarea,
   Heading,
+  Tag,
+  TagCloseButton,
 } from "@chakra-ui/react";
 import Image from "views/admin/imageUpload";
 import React, { useMemo, useEffect, useState } from "react";
@@ -78,6 +80,8 @@ export default function ServiceData(props) {
 
   const [inputName, setName] = useState();
   const [inputDesc, setDesc] = useState();
+  const [inputFactList, setFactList] = useState();
+  const [inputFactListArray, setFactListArray] = useState([]);
   const [inputImage, setImage] = useState(null);
   const [alert, setAlert] = useState(false);
   const [selectedRow, setSelectedRow] = useState();
@@ -107,11 +111,12 @@ export default function ServiceData(props) {
   } = useDisclosure();
 
   const insertServices = async () => {
+    let delimitedInputFactListArray = inputFactListArray.join('; '); 
     try {
       const { data, error } = await supabase
         .from("services")
         .insert([
-          { name: inputName, description: inputDesc, image_url: inputImage },
+          { name: inputName, description: inputDesc, service_fact: delimitedInputFactListArray, image_url: inputImage },
         ])
         .select()
         .then((data) => {
@@ -126,12 +131,14 @@ export default function ServiceData(props) {
   };
 
   const updateServices = async (dataServices) => {
+    let delimitedInputFactListArray = inputFactListArray.join('; '); 
     try {
       const { data, error } = await supabase
         .from("services")
         .update({
           name: inputName,
           description: inputDesc,
+          service_fact: delimitedInputFactListArray,
           image_url: inputImage,
         })
         .eq("id", dataServices.row.allCells[0].value)
@@ -213,10 +220,12 @@ export default function ServiceData(props) {
 
   function setRowUpdate(data) {
     console.log(data.row.cells[2].value);
+
     setSelectedRow(data);
     setName(data.row.cells[0].value);
     setDesc(data.row.cells[1].value);
-    setImage(data.row.cells[2].value);
+    setFactListArray(data.row.cells[2].value ? data.row.cells[2].value.split('; ') : "");
+    setImage(data.row.cells[3].value);
     onOpenUpdate(true);
   }
 
@@ -229,6 +238,17 @@ export default function ServiceData(props) {
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+  const HandleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      console.log("event ini", event.target.value);
+      setFactListArray((oldArray) => [...oldArray, event.target.value]);
+    }
+  };
+
+  function removeDataFromFactList(dataValue) {
+    setFactListArray(inputFactListArray.filter((item) => item !== dataValue));
+  }
 
   return (
     <Card
@@ -287,6 +307,30 @@ export default function ServiceData(props) {
               mb={3}
               onChange={(e) => setDesc(e.target.value)}
             />
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Fact List
+            </Text>
+            <Input
+              focusBorderColor="black"
+              placeholder="Input Services Fact"
+              borderRadius="10px"
+              mb={3}
+              value={inputFactList}
+              onChange={(e) => setFactList(e.target.value)}
+              onKeyDown={HandleKeyDown}
+            />
+            {inputFactListArray
+              ? inputFactListArray.length === 0
+                ? null
+                : inputFactListArray.flatMap((x) => (
+                    <Tag ml={1} mb={5} size={"md"} variant="solid" colorScheme="teal">
+                      {x}
+                      <TagCloseButton
+                        onClick={(e) => removeDataFromFactList(x)}
+                      />
+                    </Tag>
+                  ))
+              : null}
             <Image
               url={inputImage}
               previousImage={inputImage}
@@ -357,6 +401,30 @@ export default function ServiceData(props) {
               mb={3}
               onChange={(e) => setDesc(e.target.value)}
             />
+            <Text fontSize="md" fontWeight={500} mb={1} ml={1}>
+              Fact List
+            </Text>
+            <Input
+              focusBorderColor="black"
+              placeholder="Input Services Fact"
+              borderRadius="10px"
+              mb={3}
+              value={inputFactList}
+              onChange={(e) => setFactList(e.target.value)}
+              onKeyDown={HandleKeyDown}
+            />
+            {inputFactListArray
+              ? inputFactListArray.length === 0
+                ? null
+                : inputFactListArray.flatMap((x) => (
+                    <Tag ml={1} mb={5} size={"md"} variant="solid" colorScheme="teal">
+                      {x}
+                      <TagCloseButton
+                        onClick={(e) => removeDataFromFactList(x)}
+                      />
+                    </Tag>
+                  ))
+              : null}
             <Image
               url={inputImage}
               previousImage={inputImage}
@@ -510,6 +578,12 @@ export default function ServiceData(props) {
                       </Text>
                     );
                   } else if (cell.column.Header === "DESCRIPTION") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "FACT") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}

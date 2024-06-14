@@ -12,6 +12,10 @@ export const columnsServicesData = [
     accessor: "description",
   },
   {
+    Header: "FACT",
+    accessor: "service_fact",
+  },
+  {
     Header: "IMAGE URL",
     accessor: "image_url",
   },
