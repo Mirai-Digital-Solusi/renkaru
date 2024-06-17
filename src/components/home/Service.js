@@ -46,16 +46,14 @@ export default function Features(props) {
     setServices(data);
   }
 
-  const backgroundServices = useColorModeValue("gray.100", "gray.700");
-
   const DynamicIcon = ({ name }) => {
-    const IconComponent = Icons[name];
+    const IconData = Icons[name];
   
-    if (!IconComponent) { // Return a default one
+    if (!IconData) { 
       return <Icons.FcIdea fontSize="3em"/>;
     }
   
-    return <IconComponent fontSize="3em"/>;
+    return <IconData fontSize="3em"/>;
   };
 
   const Feature = ({ title, text, icon }) => {
