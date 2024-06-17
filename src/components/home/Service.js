@@ -22,12 +22,9 @@ import {
 import React, { useMemo, useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import {
-  IoAnalyticsSharp,
-  IoLogoBitcoin,
-  IoSearchSharp,
   IoCheckmarkSharp,
 } from "react-icons/io5";
-import { FcAssistant, FcIdea, FcInspection } from "react-icons/fc";
+import * as Icons from "react-icons/fc";
 
 export default function Features(props) {
   const supabase = createClient(
@@ -51,10 +48,20 @@ export default function Features(props) {
 
   const backgroundServices = useColorModeValue("gray.100", "gray.700");
 
+  const DynamicIcon = ({ name }) => {
+    const IconComponent = Icons[name];
+  
+    if (!IconComponent) { // Return a default one
+      return <Icons.FcIdea fontSize="3em"/>;
+    }
+  
+    return <IconComponent fontSize="3em"/>;
+  };
+
   const Feature = ({ title, text, icon }) => {
     return (
       <Stack>
-        {icon}
+        <Center>{icon}</Center>
         <Text fontWeight={600}>{title}</Text>
         <Text color={"gray.600"}>{text}</Text>
       </Stack>
@@ -127,21 +134,21 @@ export default function Features(props) {
             >
               <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
                 <Feature
-                  icon={<Icon as={FcAssistant} w={10} h={10} marginX="auto" />}
+                  icon={<DynamicIcon name="FcAssistant" />}
                   title={"All Day Support"}
                   text={
                     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
                   }
                 />
                 <Feature
-                  icon={<Icon as={FcInspection} w={10} h={10} marginX="auto" />}
+                  icon={<DynamicIcon name="FcInspection" />}
                   title={"Quality and Reliability"}
                   text={
                     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
                   }
                 />
                 <Feature
-                  icon={<Icon as={FcIdea} w={10} h={10} marginX="auto" />}
+                  icon={<DynamicIcon name="FcIdea" />}
                   title={"Trusted and Experienced"}
                   text={
                     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
