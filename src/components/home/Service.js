@@ -69,8 +69,8 @@ export default function Features({ dataServices, apiData }) {
                 <Center>
                   <DynamicIcon name={element.key0} />
                 </Center>
-                <Text fontWeight={600}>{element.key1}</Text>
-                <Text color={"gray.600"}>{element.key2}</Text>
+                <Text mt={3} fontWeight={600}>{element.key1}</Text>
+                <Text noOfLines={4} color={"gray.600"}>{element.key2}</Text>
               </>
             ))}
           </div>
