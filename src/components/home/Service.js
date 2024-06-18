@@ -15,54 +15,67 @@ import {
   Avatar,
   useColorModeValue,
   Stack,
+  HStack,
   Button,
   Icon,
   StackDivider,
 } from "@chakra-ui/react";
-import React, { useMemo, useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import {
-  IoCheckmarkSharp,
-} from "react-icons/io5";
+import React, { useState } from "react";
+
+import { IoCheckmarkSharp } from "react-icons/io5";
 import * as Icons from "react-icons/fc";
 
-export default function Features(props) {
-  const supabase = createClient(
-    process.env.REACT_APP_API_KEY,
-    process.env.REACT_APP_ANON_KEY
-  );
-
-  const [dataServices, setServices] = useState([]);
-  const [inputFactListArray, setFactListArray] = useState([]);
-
-  useEffect(() => {
-    getServices();
-    console.log("data services", dataServices);
-  }, []);
-
-  async function getServices() {
-    const { data } = await supabase.from("services").select();
-    console.log("data services", data);
-    setServices(data);
-  }
-
+export default function Features({ dataServices, apiData }) {
   const DynamicIcon = ({ name }) => {
-    const IconData = Icons[name];
-  
-    if (!IconData) { 
-      return <Icons.FcIdea fontSize="3em"/>;
+    if (name) {
+      
+      const nameData = name
+      console.log("namees ", typeof(nameData));
+      const IconData = Icons[nameData];
+      
+
+      if (!IconData) {
+        return <Icons.FcIdea fontSize="3em" />;
+      }
+
+      return <IconData fontSize="3em" />;
     }
-  
-    return <IconData fontSize="3em"/>;
   };
 
-  const Feature = ({ title, text, icon }) => {
+  const Feature = () => {
+    let DataFeature = [];
+    let DetailDataFeature = [];
+    if (apiData) {
+      let varData = apiData[0];
+      if (varData) {
+        DataFeature = varData.feature_detail.split(";");
+        DataFeature.map((featureDetail, indexApiData) =>
+          DetailDataFeature.push(
+            featureDetail
+              .split("|")
+              .map((element, index) => ({ [`key${index}`]: element }))
+          )
+        );
+        console.log("Detail ", DetailDataFeature);
+      }
+    }
+
     return (
-      <Stack>
-        <Center>{icon}</Center>
-        <Text fontWeight={600}>{title}</Text>
-        <Text color={"gray.600"}>{text}</Text>
-      </Stack>
+      <HStack>
+        {DetailDataFeature.map((innerArray) => (
+          <div>
+            {innerArray.map((element) => (
+              <>
+                <Center>
+                  <DynamicIcon name={element.key0} />
+                </Center>
+                <Text fontWeight={600}>{element.key1}</Text>
+                <Text color={"gray.600"}>{element.key2}</Text>
+              </>
+            ))}
+          </div>
+        ))}
+      </HStack>
     );
   };
 
@@ -84,93 +97,82 @@ export default function Features(props) {
     );
   };
 
+  const boxShadow = useColorModeValue(
+    "0 4px 6px rgba(160, 174, 192, 0.6)",
+    "0 4px 6px rgba(9, 17, 28, 0.9)"
+  );
+  const background = useColorModeValue("white", "gray.800");
+
   return (
     <Container maxW="100%" mb={{ base: 0, md: 10 }}>
-      <Box
-        maxW="5xl"
-        p={4}
-        isolation="isolate"
-        zIndex={3}
-        mt="-9rem"
-        marginInline="auto"
-      >
-        <Box
-          boxShadow={useColorModeValue(
-            "0 4px 6px rgba(160, 174, 192, 0.6)",
-            "0 4px 6px rgba(9, 17, 28, 0.9)"
-          )}
-          bg={useColorModeValue("white", "gray.800")}
-          p={{ base: 4, sm: 8 }}
-          overflow="hidden"
-          rounded="2xl"
-        >
-          <Stack
-            pos="relative"
-            zIndex={1}
-            direction="column"
-            spacing={5}
+      {apiData.map((featureApi, indexApiData) => (
+        <>
+          <Box
+            maxW="5xl"
+            p={4}
+            isolation="isolate"
+            zIndex={3}
+            mt="-9rem"
+            marginInline="auto"
+          >
+            <Box
+              boxShadow={boxShadow}
+              bg={background}
+              p={{ base: 4, sm: 8 }}
+              overflow="hidden"
+              rounded="2xl"
+            >
+              <Stack
+                pos="relative"
+                zIndex={1}
+                direction="column"
+                spacing={5}
+                textAlign="center"
+              >
+                <chakra.h1 fontSize="4xl" lineHeight={1.2} fontWeight="bold">
+                  {featureApi.feature_heading_two}
+                </chakra.h1>
+                <chakra.h1
+                  color="rgba(0, 0, 0, 0.65)"
+                  fontSize="xl"
+                  maxW="100%"
+                  lineHeight={1.2}
+                >
+                  {featureApi.feature_subheading_two}
+                </chakra.h1>
+                <Center
+                  h={{ base: 20, md: 50 }}
+                  mt={{ base: 80, md: 20 }}
+                  mb={{ base: 80, md: 20 }}
+                >
+                  <Feature />
+                </Center>
+              </Stack>
+            </Box>
+          </Box>
+          <chakra.h3
+            mt={{ base: 10, md: 20 }}
+            pl={{ base: 0, md: 80 }}
+            pr={{ base: 0, md: 80 }}
+            color="purple.700"
+            fontSize="large"
+            fontWeight="bold"
             textAlign="center"
           >
-            <chakra.h1 fontSize="4xl" lineHeight={1.2} fontWeight="bold">
-              Why Choose Us?
-            </chakra.h1>
-            <chakra.h1
-              color="rgba(0, 0, 0, 0.65)"
-              fontSize="xl"
-              maxW="100%"
-              lineHeight={1.2}
-            >
-              At Renkaru, we understand that renting a car is more than just a
-              transaction – it's an integral part of your journey. That's why
-              we've dedicated ourselves to providing an exceptional rental
-              experience that exceeds your expectations at every turn.
-            </chakra.h1>
-            <Center
-              h={{ base: 20, md: 50 }}
-              mt={{ base: 80, md: 20 }}
-              mb={{ base: 80, md: 20 }}
-            >
-              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
-                <Feature
-                  icon={<DynamicIcon name="FcAssistant" />}
-                  title={"All Day Support"}
-                  text={
-                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
-                  }
-                />
-                <Feature
-                  icon={<DynamicIcon name="FcInspection" />}
-                  title={"Quality and Reliability"}
-                  text={
-                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
-                  }
-                />
-                <Feature
-                  icon={<DynamicIcon name="FcIdea" />}
-                  title={"Trusted and Experienced"}
-                  text={
-                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
-                  }
-                />
-              </SimpleGrid>
-            </Center>
-          </Stack>
-        </Box>
-      </Box>
-      <chakra.h3
-        mt={{ base: 10, md: 20 }}
-        pl={{ base: 0, md: 80 }}
-        pr={{ base: 0, md: 80 }}
-        color="purple.700"
-        fontSize="large"
-        fontWeight="bold"
-        textAlign="center"
-      >
-        EXPLORE OUR RENTAL SERVICES
-      </chakra.h3>
-      <chakra.h4 fontSize="4xl" fontWeight="bold" mb={12} textAlign="center">
-        Discover Our Service to Craft <br /> Your Unforgettable Journey
-      </chakra.h4>
+            {featureApi.feature_heading_three}
+          </chakra.h3>
+          <chakra.h4
+            fontSize="4xl"
+            pl="10em"
+            pr="10em"
+            fontWeight="bold"
+            mb={12}
+            textAlign="center"
+          >
+            {featureApi.feature_subheading_three}
+          </chakra.h4>
+        </>
+      ))}
       {dataServices.map((feature, indexServices) => (
         <Stack
           direction={{ base: "column", md: "row" }}

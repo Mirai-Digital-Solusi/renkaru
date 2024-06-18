@@ -26,32 +26,14 @@ import { FaGithub } from "react-icons/fa";
 import { GoChevronRight } from "react-icons/go";
 import { MdOutlineContentCopy } from "react-icons/md";
 
-export default function ServicesHero(props) {
-  const supabase = createClient(
-    process.env.REACT_APP_API_KEY,
-    process.env.REACT_APP_ANON_KEY
-  );
-
-  const [dataServices, setServices] = useState([]);
-
-  useEffect(() => {
-    getServices();
-    console.log("data services", dataServices);
-  }, []);
-
-  async function getServices() {
-    const { data } = await supabase.from("services").select();
-    console.log("data services", data);
-    setServices(data);
-  }
-
-  const backgroundServices = useColorModeValue("gray.100", "gray.700");
-
+export default function ServicesHero({apiData}) {
+    
   return (
     <Container
       maxW="100%"
       bgGradient={`linear(to-tl, #2575fc 0%,  #6a11cb 100%)`}
     >
+        {apiData.map((featureApi, indexApiData) => (
       <Box pb={8}>
         <Stack
           pl={{ base: 0, md: 20 }}
@@ -76,8 +58,7 @@ export default function ServicesHero(props) {
                 fontWeight="bold"
                 textAlign={{ base: "center", md: "left" }}
               >
-                The Premier Car Rental Service Delivering Unmatched Quality and
-                Value.
+                {featureApi.feature_heading_one}
               </chakra.h1>
             </Box>
           </Stack>
@@ -94,14 +75,12 @@ export default function ServicesHero(props) {
               fontWeight="400"
               color="#FFFFFF"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat
+              {featureApi.feature_subheading_one}
             </Text>
           </Stack>
         </Stack>
       </Box>
+        ))}
     </Container>
   );
 }
