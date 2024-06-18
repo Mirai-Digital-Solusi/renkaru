@@ -23,6 +23,7 @@ import TestimonialTables from "views/admin/testimonialsTables";
 import ContactData from "views/admin/contactData";
 import TermsData from "views/admin/termsData";
 import AboutData from "views/admin/aboutData";
+import FeatureData from "views/admin/featureData";
 
 // Public Imports
 import HomePublic from "views/main/home";
@@ -52,14 +53,6 @@ const routes = [
     path: "/services",
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: ServicePublic,
-    AuthRequired: false,
-  },
-  {
-    name: "Fleets",
-    layout: "/main",
-    path: "/fleets",
-    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-    component: FleetPublic,
     AuthRequired: false,
   },
   {
@@ -111,6 +104,14 @@ const routes = [
     icon: <Icon as={MdSource} width="20px" height="20px" color="inherit" />,
     path: "/services",
     component: ServiceTables,
+    AuthRequired: true,
+  },
+  {
+    name: "Feature",
+    layout: "/admin",
+    icon: <Icon as={MdBusiness} width="20px" height="20px" color="inherit" />,
+    path: "/feature",
+    component: FeatureData,
     AuthRequired: true,
   },
   {
