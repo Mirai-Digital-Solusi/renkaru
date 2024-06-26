@@ -17,7 +17,7 @@ function AuthIllustration(props) {
     <>
     <Header />
       {children}
-      <FixedPlugin />
+      {/* <FixedPlugin /> */}
       <Footer />
     </>
   );

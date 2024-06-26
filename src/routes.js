@@ -20,6 +20,7 @@ import RentalOrderTables from "views/admin/rentalsOrderTables";
 import FleetTables from "views/admin/fleetsTables";
 import FaqTables from "views/admin/faqsTables";
 import TestimonialTables from "views/admin/testimonialsTables";
+import OfferTables from "views/admin/offersTable";
 import ContactData from "views/admin/contactData";
 import TermsData from "views/admin/termsData";
 import AboutData from "views/admin/aboutData";
@@ -105,6 +106,14 @@ const routes = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     path: "/dashboard",
     component: MainDashboard,
+    AuthRequired: true,
+  },
+  {
+    name: "Offers",
+    layout: "/admin",
+    icon: <Icon as={MdSource} width="20px" height="20px" color="inherit" />,
+    path: "/offers",
+    component: OfferTables,
     AuthRequired: true,
   },
   {
