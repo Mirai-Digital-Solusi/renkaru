@@ -27,6 +27,7 @@ import FeatureData from "views/admin/featureData";
 
 // Public Imports
 import HomePublic from "views/main/home";
+import OfferPublic from "views/main/offers";
 import ServicePublic from "views/main/services";
 import FleetPublic from "views/main/fleets";
 import FaqPublic from "views/main/faqs";
@@ -45,6 +46,14 @@ const routes = [
     path: "/home",
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: HomePublic,
+    AuthRequired: false,
+  },
+  {
+    name: "Offers",
+    layout: "/main",
+    path: "/offers",
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: OfferPublic,
     AuthRequired: false,
   },
   {

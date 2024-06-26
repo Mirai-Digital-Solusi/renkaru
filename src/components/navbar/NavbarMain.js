@@ -27,6 +27,7 @@ import { IconType } from "react-icons";
 
 const navLinks = [
   { name: "Home", path: "#" },
+  { name: "Offers", path: "#/main/offers" },
   { name: "Services", path: "#/main/services" },
   { name: "Fleet", path: "#/main/fleets" },
 ];

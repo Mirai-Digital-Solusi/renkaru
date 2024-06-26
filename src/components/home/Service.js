@@ -28,11 +28,9 @@ import * as Icons from "react-icons/fc";
 export default function Features({ dataServices, apiData }) {
   const DynamicIcon = ({ name }) => {
     if (name) {
-      
-      const nameData = name
-      console.log("namees ", typeof(nameData));
+      const nameData = name;
+      console.log("namees ", typeof nameData);
       const IconData = Icons[nameData];
-      
 
       if (!IconData) {
         return <Icons.FcIdea fontSize="3em" />;
@@ -49,7 +47,7 @@ export default function Features({ dataServices, apiData }) {
       let varData = apiData[0];
       if (varData) {
         DataFeature = varData.feature_detail.split(";");
-        DataFeature.map((featureDetail, indexApiData) =>
+        DataFeature.map((featureDetail) =>
           DetailDataFeature.push(
             featureDetail
               .split("|")
@@ -69,8 +67,12 @@ export default function Features({ dataServices, apiData }) {
                 <Center>
                   <DynamicIcon name={element.key0} />
                 </Center>
-                <Text mt={3} fontWeight={600}>{element.key1}</Text>
-                <Text noOfLines={4} color={"gray.600"}>{element.key2}</Text>
+                <Text mt={3} fontWeight={600}>
+                  {element.key1}
+                </Text>
+                <Text noOfLines={4} color={"gray.600"}>
+                  {element.key2}
+                </Text>
               </>
             ))}
           </div>

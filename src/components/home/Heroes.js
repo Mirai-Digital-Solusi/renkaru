@@ -386,6 +386,7 @@ export default function Heroes() {
           >
             <HStack
               as={Link}
+              href="#/main/offers"
               p={1}
               rounded="full"
               fontSize="sm"
