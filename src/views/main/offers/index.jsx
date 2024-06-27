@@ -118,7 +118,7 @@ export default function Offers() {
 
   return (
     <DefaultMain>
-      <Flex position="relative" h="max-content" bgGradient="linear(to-tl, #2575fc 0%,  #6a11cb 100%)">
+      <Flex position="relative" h="max-content" bgGradient="linear(to-t, #fdfbfb 0%, #ebedee 100%)">
         <Offer />
       </Flex>
       <Flex position="relative" h="max-content">

@@ -49,30 +49,18 @@ export default function Offers(props) {
   return (
     <Container maxW="6xl" p={{ base: 5, md: 5 }} mt={{ md: "3em" }}>
       <Center h={{ base: 20, md: 50 }}>
-        <chakra.h3
-          bg="#FFFFFF"
-          p={1}
-          pl={5}
-          pr={5}
-          borderRadius={20}
-          mb={5}
-          color="#2F4858"
-          fontSize="xl"
-          fontWeight="bold"
-          textAlign="center"
-        >
-          Our Offers
-        </chakra.h3>
+         <chakra.h3 bg="#464555" fontSize="xl" p={2} pl={5} pr={5} borderRadius={20} mb={5} color="#F5F5F5" fontWeight="bold" textAlign="center">
+        Recent Offer!
+      </chakra.h3>
       </Center>
 
       <chakra.h3
-        color="white"
         fontSize="4xl"
-        fontWeight={500}
+        color={'#6A3D00'}
+        fontWeight={900}
         mb={10}
         textAlign="center"
-        fontFamily="highlightFont"
-        letterSpacing={".7px"}
+        letterSpacing={".5px"}
       >
         Explore Our Best Prices of the Season!
       </chakra.h3>
